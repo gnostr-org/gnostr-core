@@ -78,7 +78,7 @@ fn main() {
 
 /// Print usage and exit.
 fn usage() {
-    println!("usage: cargo run --example hypercore -- [client|server] [port] [key]");
+    println!("usage: cargo run --example replication -- [client|server] [port] [key]");
     std::process::exit(1);
 }
 
