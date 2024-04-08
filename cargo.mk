@@ -19,6 +19,7 @@ cargo-check:### 	cargo-check
 	@cargo c
 cargo-bench:### 	cargo-bench
 	@cargo bench
+cargo-t:cargo-test
 cargo-test:### 	cargo-test
 	@cargo test
 cargo-report:### 	cargo-report
