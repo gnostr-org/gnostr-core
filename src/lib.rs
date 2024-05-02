@@ -50,8 +50,8 @@
 //!
 //! ```no_run
 //! # async_std::task::block_on(async {
-//! use hypercore_protocol::{ProtocolBuilder, Event, Message};
-//! use hypercore_protocol::schema::*;
+//! use gnostr_core::{ProtocolBuilder, Event, Message};
+//! use gnostr_core::schema::*;
 //! use async_std::prelude::*;
 //! // Start a tcp server.
 //! let listener = async_std::net::TcpListener::bind("localhost:8000").await.unwrap();

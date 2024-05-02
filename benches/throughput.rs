@@ -4,12 +4,12 @@ use criterion::{criterion_group, criterion_main, Criterion, Throughput};
 use futures::future::Either;
 use futures::io::{AsyncRead, AsyncWrite};
 use futures::stream::{FuturesUnordered, StreamExt};
-use hypercore_protocol::{schema::*, Duplex};
-use hypercore_protocol::{Channel, Event, Message, ProtocolBuilder};
+use gnostr_core::{schema::*, Duplex};
+use gnostr_core::{Channel, Event, Message, ProtocolBuilder};
 use log::*;
 use std::time::Instant;
 
-const PORT: usize = 11011;
+const PORT: usize = 9095;
 const SIZE: u64 = 1000;
 const COUNT: u64 = 200;
 const CLIENTS: usize = 1;
@@ -21,7 +21,7 @@ fn bench_throughput(c: &mut Criterion) {
     let mut group = c.benchmark_group("throughput");
     let data = vec![1u8; SIZE as usize];
 
-    // let _server = task::block_on(start_server(&address));
+    let _server = task::block_on(start_server(&address));
 
     group.sample_size(10);
     group.throughput(Throughput::Bytes(
