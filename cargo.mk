@@ -48,7 +48,7 @@ cargo-t:cargo-test
 cargo-test:### 	cargo-test
 	@. $(HOME)/.cargo/env
 	#@cargo test
-	@cargo test -p jj-cli --test runner
+	@cargo test
 cargo-report:### 	cargo-report
 	@. $(HOME)/.cargo/env
 	cargo report future-incompatibilities --id 1
