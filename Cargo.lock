@@ -2315,6 +2315,7 @@ dependencies = [
  "uu_false",
  "uu_fmt",
  "uu_fold",
+ "uu_git",
  "uu_groups",
  "uu_hashsum",
  "uu_head",
@@ -7197,6 +7198,14 @@ dependencies = [
 
 [[package]]
 name = "uu_fold"
+version = "0.0.27"
+dependencies = [
+ "clap 4.4.2",
+ "uucore",
+]
+
+[[package]]
+name = "uu_git"
 version = "0.0.27"
 dependencies = [
  "clap 4.4.2",

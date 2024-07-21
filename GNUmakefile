@@ -80,6 +80,7 @@ PROGS       := \
 	false \
 	fmt \
 	fold \
+	git \
 	hashsum \
 	head \
 	join \

@@ -1,8 +1,8 @@
-# template
+# git
 
 ```
-template [-z] NAME [SUFFIX]
-template OPTION... NAME...
+git [-z] NAME [SUFFIX]
+git OPTION... NAME...
 ```
 
 Print NAME with any leading directory components removed

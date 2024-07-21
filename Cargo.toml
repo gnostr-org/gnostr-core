@@ -83,6 +83,7 @@ feat_common_core = [
   "false",
   "fmt",
   "fold",
+  "git",
   "hashsum",
   "head",
   "join",
@@ -408,6 +409,7 @@ factor = { optional = true, version = "0.0.27", package = "uu_factor", path = "s
 false = { optional = true, version = "0.0.27", package = "uu_false", path = "src/uu/false" }
 fmt = { optional = true, version = "0.0.27", package = "uu_fmt", path = "src/uu/fmt" }
 fold = { optional = true, version = "0.0.27", package = "uu_fold", path = "src/uu/fold" }
+git = { optional = true, version = "0.0.27", package = "uu_git", path = "src/uu/git" }
 groups = { optional = true, version = "0.0.27", package = "uu_groups", path = "src/uu/groups" }
 hashsum = { optional = true, version = "0.0.27", package = "uu_hashsum", path = "src/uu/hashsum" }
 head = { optional = true, version = "0.0.27", package = "uu_head", path = "src/uu/head" }

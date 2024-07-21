@@ -12,9 +12,9 @@ use uucore::error::{UResult, UUsageError};
 use uucore::line_ending::LineEnding;
 use uucore::{format_usage, help_about, help_usage};
 
-static ABOUT: &str = help_about!("template.md");
+static ABOUT: &str = help_about!("git.md");
 
-const USAGE: &str = help_usage!("template.md");
+const USAGE: &str = help_usage!("git.md");
 
 pub mod options {
     pub static MULTIPLE: &str = "multiple";
@@ -68,7 +68,7 @@ pub fn uumain(args: impl uucore::Args) -> UResult<()> {
     //
 
     for path in name_args {
-        print!("{}{}", template(path, &suffix), line_ending);
+        print!("{}{}", git(path, &suffix), line_ending);
     }
 
     Ok(())
@@ -113,7 +113,7 @@ pub fn uu_app() -> Command {
         )
 }
 
-fn template(fullname: &str, suffix: &str) -> String {
+fn git(fullname: &str, suffix: &str) -> String {
     // Remove all platform-specific path separators from the end.
     let path = fullname.trim_end_matches(is_separator);
 
