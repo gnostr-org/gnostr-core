@@ -116,6 +116,7 @@ feat_common_core = [
   "tac",
   "tail",
   "tee",
+  "template",
   "test",
   "tr",
   "true",
@@ -459,6 +460,7 @@ sync = { optional = true, version = "0.0.27", package = "uu_sync", path = "src/u
 tac = { optional = true, version = "0.0.27", package = "uu_tac", path = "src/uu/tac" }
 tail = { optional = true, version = "0.0.27", package = "uu_tail", path = "src/uu/tail" }
 tee = { optional = true, version = "0.0.27", package = "uu_tee", path = "src/uu/tee" }
+template = { optional = true, version = "0.0.27", package = "uu_template", path = "src/uu/template" }
 timeout = { optional = true, version = "0.0.27", package = "uu_timeout", path = "src/uu/timeout" }
 touch = { optional = true, version = "0.0.27", package = "uu_touch", path = "src/uu/touch" }
 tr = { optional = true, version = "0.0.27", package = "uu_tr", path = "src/uu/tr" }

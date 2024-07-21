@@ -1087,6 +1087,7 @@ dependencies = [
  "uu_tac",
  "uu_tail",
  "uu_tee",
+ "uu_template",
  "uu_test",
  "uu_timeout",
  "uu_touch",
@@ -3290,6 +3291,14 @@ version = "0.0.27"
 dependencies = [
  "clap",
  "libc",
+ "uucore",
+]
+
+[[package]]
+name = "uu_template"
+version = "0.0.27"
+dependencies = [
+ "clap",
  "uucore",
 ]
 

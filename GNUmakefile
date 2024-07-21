@@ -114,6 +114,7 @@ PROGS       := \
 	sync \
 	tac \
 	tail \
+	template \
 	tee \
 	test \
 	tr \
@@ -230,6 +231,7 @@ TEST_PROGS  := \
 	sum \
 	tac \
 	tail \
+	template \
 	test \
 	touch \
 	tr \
