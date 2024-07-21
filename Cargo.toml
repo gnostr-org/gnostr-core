@@ -4,7 +4,7 @@
 # spell-checker:ignore (libs) bigdecimal datetime serde bincode fundu gethostid kqueue libselinux mangen memmap procfs uuhelp
 
 [package]
-name = "coreutils"
+name = "gnostr"
 version = "0.0.27"
 authors = ["uutils developers"]
 license = "MIT"

@@ -28,7 +28,7 @@ DATAROOTDIR ?= $(PREFIX)/share
 INSTALLDIR_BIN=$(DESTDIR)$(BINDIR)
 
 #prefix to apply to coreutils binary and all tool binaries
-PROG_PREFIX ?=
+PROG_PREFIX =gnostr-
 
 # This won't support any directory with spaces in its name, but you can just
 # make a symlink without spaces that points to the directory.
