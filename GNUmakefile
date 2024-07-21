@@ -392,3 +392,5 @@ endif
 	rm -f $(addprefix $(DESTDIR)$(DATAROOTDIR)/man/man1/$(PROG_PREFIX),$(addsuffix .1,$(PROGS)))
 
 .PHONY: all build build-coreutils build-pkgs test distclean clean busytest install uninstall
+
+-include cargo.mk
