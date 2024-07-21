@@ -1,1 +1,1 @@
-uucore::bin!(uu_template);
+uucore::bin!(uu_git);
