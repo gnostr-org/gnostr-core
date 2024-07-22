@@ -1,8 +1,8 @@
-# template
+# bech32
 
 ```
-template [-z] NAME [SUFFIX]
-template OPTION... NAME...
+bech32 [-z] NAME [SUFFIX]
+bech32 OPTION... NAME...
 ```
 
 Print NAME with any leading directory components removed

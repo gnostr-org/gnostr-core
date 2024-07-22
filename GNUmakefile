@@ -60,7 +60,7 @@ PROGS       := \
 	base64 \
 	basenc \
 	basename \
-	bech32_to_any \
+	bech32 \
 	cat \
 	cksum \
 	comm \
@@ -181,6 +181,7 @@ TEST_PROGS  := \
 	base32 \
 	base64 \
 	basename \
+	bech32 \
 	cat \
 	chcon \
 	chgrp \

@@ -1,5 +1,5 @@
 [package]
-name = "uu_bech32_to_any"
+name = "uu_bech32"
 version = "0.0.27"
 authors = ["uutils developers"]
 license = "MIT"
@@ -14,12 +14,12 @@ edition = "2021"
 readme.workspace = true
 
 [lib]
-path = "src/bech32_to_any.rs"
+path = "src/bech32.rs"
 
 [dependencies]
 clap = { workspace = true }
 uucore = { workspace = true }
 
 [[bin]]
-name = "bech32-to-any"
+name = "bech32"
 path = "src/main.rs"
