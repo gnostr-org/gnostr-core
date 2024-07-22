@@ -60,6 +60,7 @@ PROGS       := \
 	base64 \
 	basenc \
 	basename \
+	bech32_to_any \
 	cat \
 	cksum \
 	comm \
