@@ -1009,7 +1009,7 @@ dependencies = [
  "uu_base64",
  "uu_basename",
  "uu_basenc",
- "uu_bech32_to_any",
+ "uu_bech32",
  "uu_cat",
  "uu_chcon",
  "uu_chgrp",
@@ -2519,7 +2519,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "uu_bech32_to_any"
+name = "uu_bech32"
 version = "0.0.27"
 dependencies = [
  "clap",

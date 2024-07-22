@@ -12,9 +12,9 @@ use uucore::error::{UResult, UUsageError};
 use uucore::line_ending::LineEnding;
 use uucore::{format_usage, help_about, help_usage};
 
-static ABOUT: &str = help_about!("bech32_to_any.md");
+static ABOUT: &str = help_about!("bech32.md");
 
-const USAGE: &str = help_usage!("bech32_to_any.md");
+const USAGE: &str = help_usage!("bech32.md");
 
 pub mod options {
     pub static MULTIPLE: &str = "multiple";
@@ -68,7 +68,7 @@ pub fn uumain(args: impl uucore::Args) -> UResult<()> {
     //
 
     for path in name_args {
-        print!("{}{}", bech32_to_any(path, &suffix), line_ending);
+        print!("{}{}", bech32(path, &suffix), line_ending);
     }
 
     Ok(())
@@ -113,7 +113,7 @@ pub fn uu_app() -> Command {
         )
 }
 
-fn bech32_to_any(fullname: &str, suffix: &str) -> String {
+fn bech32(fullname: &str, suffix: &str) -> String {
     // Remove all platform-specific path separators from the end.
     let path = fullname.trim_end_matches(is_separator);
 
