@@ -4,7 +4,7 @@
 # spell-checker:ignore (libs) bigdecimal datetime serde bincode fundu gethostid kqueue libselinux mangen memmap procfs uuhelp
 
 [package]
-name = "coreutils"
+name = "gnostr"
 version = "0.0.27"
 authors = ["uutils developers"]
 license = "MIT"
@@ -83,6 +83,7 @@ feat_common_core = [
   "false",
   "fmt",
   "fold",
+  "git",
   "hashsum",
   "head",
   "join",
@@ -116,6 +117,7 @@ feat_common_core = [
   "tac",
   "tail",
   "tee",
+  "template",
   "test",
   "tr",
   "true",
@@ -407,6 +409,7 @@ factor = { optional = true, version = "0.0.27", package = "uu_factor", path = "s
 false = { optional = true, version = "0.0.27", package = "uu_false", path = "src/uu/false" }
 fmt = { optional = true, version = "0.0.27", package = "uu_fmt", path = "src/uu/fmt" }
 fold = { optional = true, version = "0.0.27", package = "uu_fold", path = "src/uu/fold" }
+git = { optional = true, version = "0.0.27", package = "uu_git", path = "src/uu/git" }
 groups = { optional = true, version = "0.0.27", package = "uu_groups", path = "src/uu/groups" }
 hashsum = { optional = true, version = "0.0.27", package = "uu_hashsum", path = "src/uu/hashsum" }
 head = { optional = true, version = "0.0.27", package = "uu_head", path = "src/uu/head" }
@@ -459,6 +462,7 @@ sync = { optional = true, version = "0.0.27", package = "uu_sync", path = "src/u
 tac = { optional = true, version = "0.0.27", package = "uu_tac", path = "src/uu/tac" }
 tail = { optional = true, version = "0.0.27", package = "uu_tail", path = "src/uu/tail" }
 tee = { optional = true, version = "0.0.27", package = "uu_tee", path = "src/uu/tee" }
+template = { optional = true, version = "0.0.27", package = "uu_template", path = "src/uu/template" }
 timeout = { optional = true, version = "0.0.27", package = "uu_timeout", path = "src/uu/timeout" }
 touch = { optional = true, version = "0.0.27", package = "uu_touch", path = "src/uu/touch" }
 tr = { optional = true, version = "0.0.27", package = "uu_tr", path = "src/uu/tr" }

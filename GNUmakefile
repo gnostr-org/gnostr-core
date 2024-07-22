@@ -28,7 +28,7 @@ DATAROOTDIR ?= $(PREFIX)/share
 INSTALLDIR_BIN=$(DESTDIR)$(BINDIR)
 
 #prefix to apply to coreutils binary and all tool binaries
-PROG_PREFIX ?=
+PROG_PREFIX =gnostr-
 
 # This won't support any directory with spaces in its name, but you can just
 # make a symlink without spaces that points to the directory.
@@ -80,6 +80,7 @@ PROGS       := \
 	false \
 	fmt \
 	fold \
+	git \
 	hashsum \
 	head \
 	join \
@@ -114,6 +115,7 @@ PROGS       := \
 	sync \
 	tac \
 	tail \
+	template \
 	tee \
 	test \
 	tr \
@@ -230,6 +232,7 @@ TEST_PROGS  := \
 	sum \
 	tac \
 	tail \
+	template \
 	test \
 	touch \
 	tr \
@@ -390,3 +393,5 @@ endif
 	rm -f $(addprefix $(DESTDIR)$(DATAROOTDIR)/man/man1/$(PROG_PREFIX),$(addsuffix .1,$(PROGS)))
 
 .PHONY: all build build-coreutils build-pkgs test distclean clean busytest install uninstall
+
+-include cargo.mk
