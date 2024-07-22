@@ -1009,6 +1009,7 @@ dependencies = [
  "uu_base64",
  "uu_basename",
  "uu_basenc",
+ "uu_bech32_to_any",
  "uu_cat",
  "uu_chcon",
  "uu_chgrp",
@@ -2518,6 +2519,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "uu_bech32_to_any"
+version = "0.0.27"
+dependencies = [
+ "clap",
+ "uucore",
+]
+
+[[package]]
 name = "uu_cat"
 version = "0.0.27"
 dependencies = [
@@ -2778,7 +2787,7 @@ dependencies = [
 name = "uu_git"
 version = "0.0.27"
 dependencies = [
- "clap 4.4.2",
+ "clap",
  "uucore",
 ]
 
