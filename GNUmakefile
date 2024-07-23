@@ -98,6 +98,7 @@ PROGS       := \
 	nproc \
 	od \
 	paste \
+	post \
 	post_event \
 	pr \
 	printenv \
@@ -364,6 +365,8 @@ install: build manpages completions
 	mkdir -p $(INSTALLDIR_BIN)
 ifeq (${MULTICALL}, y)
 	$(INSTALL) $(BUILDDIR)/coreutils $(INSTALLDIR_BIN)/$(PROG_PREFIX)coreutils
+	$(INSTALL) $(BUILDDIR)/gnostr* $(INSTALLDIR_BIN)/$(PROG_PREFIX)gnostr*
+	$(INSTALL) $(BUILDDIR)/git-gnostr* $(INSTALLDIR_BIN)/$(PROG_PREFIX)git-gnostr*
 	cd $(INSTALLDIR_BIN) && $(foreach prog, $(filter-out coreutils, $(INSTALLEES)), \
 		ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(prog) &&) :
 	$(if $(findstring test,$(INSTALLEES)), cd $(INSTALLDIR_BIN) && ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)[)
