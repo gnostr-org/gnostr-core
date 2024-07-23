@@ -25,6 +25,10 @@ mod test_basename;
 #[path = "by-util/test_basenc.rs"]
 mod test_basenc;
 
+#[cfg(feature = "bech32")]
+#[path = "by-util/test_bech32.rs"]
+mod test_bech32;
+
 #[cfg(feature = "cat")]
 #[path = "by-util/test_cat.rs"]
 mod test_cat;
