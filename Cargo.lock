@@ -1065,6 +1065,7 @@ dependencies = [
  "uu_paste",
  "uu_pathchk",
  "uu_pinky",
+ "uu_post-event",
  "uu_pr",
  "uu_printenv",
  "uu_printf",
@@ -3053,6 +3054,14 @@ dependencies = [
 
 [[package]]
 name = "uu_pinky"
+version = "0.0.27"
+dependencies = [
+ "clap",
+ "uucore",
+]
+
+[[package]]
+name = "uu_post-event"
 version = "0.0.27"
 dependencies = [
  "clap",
