@@ -99,7 +99,7 @@ feat_common_core = [
   "numfmt",
   "od",
   "paste",
-  "post-event", ##gnostr
+  "post_event", ##gnostr
   "pr",
   "printenv",
   "printf",
@@ -445,7 +445,7 @@ pinky = { optional = true, version = "0.0.27", package = "uu_pinky", path = "src
 pr = { optional = true, version = "0.0.27", package = "uu_pr", path = "src/uu/pr" }
 printenv = { optional = true, version = "0.0.27", package = "uu_printenv", path = "src/uu/printenv" }
 printf = { optional = true, version = "0.0.27", package = "uu_printf", path = "src/uu/printf" }
-post-event = { optional = true, version = "0.0.27", package = "uu_post-event", path = "src/uu/post-event" }
+post_event = { optional = true, version = "0.0.27", package = "uu_post_event", path = "src/uu/post-event" }
 ptx = { optional = true, version = "0.0.27", package = "uu_ptx", path = "src/uu/ptx" }
 pwd = { optional = true, version = "0.0.27", package = "uu_pwd", path = "src/uu/pwd" }
 readlink = { optional = true, version = "0.0.27", package = "uu_readlink", path = "src/uu/readlink" }

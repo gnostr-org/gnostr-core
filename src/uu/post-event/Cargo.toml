@@ -1,5 +1,5 @@
 [package]
-name = "uu_post-event"
+name = "uu_post_event"
 version = "0.0.27"
 authors = ["uutils developers"]
 license = "MIT"
@@ -14,7 +14,7 @@ edition = "2021"
 readme.workspace = true
 
 [lib]
-path = "src/post-event.rs"
+path = "src/post_event.rs"
 
 [dependencies]
 clap = { workspace = true }
