@@ -62,7 +62,7 @@ feat_common_core = [
   "base64",
   "basename",
   "basenc",
-  "bech32",
+  "bech32", ##gnostr
   "cat",
   "cksum",
   "comm",
@@ -84,7 +84,7 @@ feat_common_core = [
   "false",
   "fmt",
   "fold",
-  "git",
+  "git", ##gnostr
   "hashsum",
   "head",
   "join",
@@ -118,7 +118,7 @@ feat_common_core = [
   "tac",
   "tail",
   "tee",
-  "template",
+  "template", ##gnostr
   "test",
   "tr",
   "true",
