@@ -98,6 +98,7 @@ PROGS       := \
 	nproc \
 	od \
 	paste \
+	post-event \
 	pr \
 	printenv \
 	printf \
