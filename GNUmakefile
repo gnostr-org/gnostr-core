@@ -129,6 +129,7 @@ PROGS       := \
 	vdir \
 	wc \
 	whoami \
+	xq \
 	yes
 
 UNIX_PROGS := \

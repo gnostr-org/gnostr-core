@@ -130,6 +130,7 @@ feat_common_core = [
   "unlink",
   "vdir",
   "wc",
+  "xq", ##gnostr
   "yes",
 ]
 # "feat_Tier1" == expanded set of utilities which can be built/run on the usual rust "Tier 1" target platforms (ref: <https://forge.rust-lang.org/release/platform-support.html>)
@@ -482,6 +483,7 @@ vdir = { optional = true, version = "0.0.27", package = "uu_vdir", path = "src/u
 wc = { optional = true, version = "0.0.27", package = "uu_wc", path = "src/uu/wc" }
 who = { optional = true, version = "0.0.27", package = "uu_who", path = "src/uu/who" }
 whoami = { optional = true, version = "0.0.27", package = "uu_whoami", path = "src/uu/whoami" }
+xq = { optional = true, version = "0.0.27", package = "uu_xq", path = "src/uu/xq" }
 yes = { optional = true, version = "0.0.27", package = "uu_yes", path = "src/uu/yes" }
 
 # this breaks clippy linting with: "tests/by-util/test_factor_benches.rs: No such file or directory (os error 2)"
