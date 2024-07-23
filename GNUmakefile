@@ -352,6 +352,9 @@ manpages: build-coreutils
 	$(foreach prog, $(INSTALLEES), \
 		$(BUILDDIR)/coreutils manpage $(prog) > $(BUILDDIR)/man/$(PROG_PREFIX)$(prog).1; \
 	)
+	$(foreach prog, $(INSTALLEES), \
+		$(BUILDDIR)/gnostr-rs manpage $(prog) > $(BUILDDIR)/man/$(PROG_PREFIX)$(prog).1; \
+	)
 
 completions: build-coreutils
 	mkdir -p $(BUILDDIR)/completions/zsh $(BUILDDIR)/completions/bash $(BUILDDIR)/completions/fish
