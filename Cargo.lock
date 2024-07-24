@@ -1108,6 +1108,7 @@ dependencies = [
  "uu_users",
  "uu_vdir",
  "uu_wc",
+ "uu_weeble",
  "uu_who",
  "uu_whoami",
  "uu_xq",
@@ -3486,6 +3487,14 @@ dependencies = [
  "nix",
  "thiserror",
  "unicode-width",
+ "uucore",
+]
+
+[[package]]
+name = "uu_weeble"
+version = "0.0.27"
+dependencies = [
+ "clap",
  "uucore",
 ]
 
