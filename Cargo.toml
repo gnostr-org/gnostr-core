@@ -489,6 +489,7 @@ users = { optional = true, version = "0.0.27", package = "uu_users", path = "src
 vdir = { optional = true, version = "0.0.27", package = "uu_vdir", path = "src/uu/vdir" }
 wc = { optional = true, version = "0.0.27", package = "uu_wc", path = "src/uu/wc" }
 weeble = { optional = true, version = "0.0.27", package = "uu_weeble", path = "src/uu/weeble" }
+wobble = { optional = true, version = "0.0.27", package = "uu_wobble", path = "src/uu/wobble" }
 who = { optional = true, version = "0.0.27", package = "uu_who", path = "src/uu/who" }
 whoami = { optional = true, version = "0.0.27", package = "uu_whoami", path = "src/uu/whoami" }
 xq = { optional = true, version = "0.0.27", package = "uu_xq", path = "src/uu/xq" }

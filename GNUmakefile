@@ -132,6 +132,7 @@ PROGS       := \
 	vdir \
 	wc \
 	weeble \
+	wobble \
 	whoami \
 	xq \
 	yes

@@ -1112,6 +1112,7 @@ dependencies = [
  "uu_weeble",
  "uu_who",
  "uu_whoami",
+ "uu_wobble",
  "uu_xq",
  "uu_yes",
  "uucore",
@@ -3523,6 +3524,14 @@ dependencies = [
  "libc",
  "uucore",
  "windows-sys 0.48.0",
+]
+
+[[package]]
+name = "uu_wobble"
+version = "0.0.27"
+dependencies = [
+ "clap",
+ "uucore",
 ]
 
 [[package]]
