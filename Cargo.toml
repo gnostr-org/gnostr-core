@@ -90,6 +90,7 @@ feat_common_core = [
   "hashsum",
   "head",
   "join",
+  "keypair", ##gnostr
   "link",
   "ln",
   "ls",
