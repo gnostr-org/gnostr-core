@@ -65,6 +65,7 @@ PROGS       := \
 	blockheight \
 	cat \
 	cksum \
+	cli \
 	comm \
 	cp \
 	csplit \
@@ -197,6 +198,7 @@ TEST_PROGS  := \
 	chmod \
 	chown \
 	cksum \
+	cli \
 	comm \
 	cp \
 	csplit \

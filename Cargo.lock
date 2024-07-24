@@ -1018,6 +1018,7 @@ dependencies = [
  "uu_chown",
  "uu_chroot",
  "uu_cksum",
+ "uu_cli",
  "uu_comm",
  "uu_cp",
  "uu_csplit",
@@ -2603,6 +2604,14 @@ dependencies = [
  "clap",
  "hex",
  "regex",
+ "uucore",
+]
+
+[[package]]
+name = "uu_cli"
+version = "0.0.27"
+dependencies = [
+ "clap",
  "uucore",
 ]
 
