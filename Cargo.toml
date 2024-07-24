@@ -66,6 +66,7 @@ feat_common_core = [
   "blockheight", ##gnostr
   "cat",
   "cksum",
+  "cli",
   "comm",
   "cp",
   "csplit",
@@ -399,6 +400,7 @@ chmod = { optional = true, version = "0.0.27", package = "uu_chmod", path = "src
 chown = { optional = true, version = "0.0.27", package = "uu_chown", path = "src/uu/chown" }
 chroot = { optional = true, version = "0.0.27", package = "uu_chroot", path = "src/uu/chroot" }
 cksum = { optional = true, version = "0.0.27", package = "uu_cksum", path = "src/uu/cksum" }
+cli = { optional = true, version = "0.0.27", package = "uu_cli", path = "src/uu/cli" }
 comm = { optional = true, version = "0.0.27", package = "uu_comm", path = "src/uu/comm" }
 cp = { optional = true, version = "0.0.27", package = "uu_cp", path = "src/uu/cp" }
 csplit = { optional = true, version = "0.0.27", package = "uu_csplit", path = "src/uu/csplit" }
