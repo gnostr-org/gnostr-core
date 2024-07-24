@@ -89,6 +89,7 @@ feat_common_core = [
   "hashsum",
   "head",
   "join",
+  "keypair", ##gnostr
   "link",
   "ln",
   "ls",
@@ -426,6 +427,7 @@ hostname = { optional = true, version = "0.0.27", package = "uu_hostname", path 
 id = { optional = true, version = "0.0.27", package = "uu_id", path = "src/uu/id" }
 install = { optional = true, version = "0.0.27", package = "uu_install", path = "src/uu/install" }
 join = { optional = true, version = "0.0.27", package = "uu_join", path = "src/uu/join" }
+keypair = { optional = true, version = "0.0.27", package = "uu_keypair", path = "src/uu/keypair" }
 kill = { optional = true, version = "0.0.27", package = "uu_kill", path = "src/uu/kill" }
 link = { optional = true, version = "0.0.27", package = "uu_link", path = "src/uu/link" }
 ln = { optional = true, version = "0.0.27", package = "uu_ln", path = "src/uu/ln" }
