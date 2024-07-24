@@ -1038,6 +1038,7 @@ dependencies = [
  "uu_false",
  "uu_fmt",
  "uu_fold",
+ "uu_get_relays",
  "uu_git",
  "uu_groups",
  "uu_hashsum",
@@ -2802,6 +2803,14 @@ dependencies = [
 
 [[package]]
 name = "uu_fold"
+version = "0.0.27"
+dependencies = [
+ "clap",
+ "uucore",
+]
+
+[[package]]
+name = "uu_get_relays"
 version = "0.0.27"
 dependencies = [
  "clap",

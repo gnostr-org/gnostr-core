@@ -84,6 +84,7 @@ PROGS       := \
 	false \
 	fmt \
 	fold \
+	get_relays \
 	git \
 	hashsum \
 	head \
@@ -213,6 +214,8 @@ TEST_PROGS  := \
 	factor \
 	false \
 	fold \
+	get_relays \
+	git \
 	hashsum \
 	head \
 	install \

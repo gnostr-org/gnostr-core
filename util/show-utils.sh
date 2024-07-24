@@ -23,7 +23,7 @@ ME_parent_dir_abs="$("${REALPATH}" -mP -- "${ME_parent_dir}" || "${REALPATH}" --
 
 # default ("Tier 1" cross-platform) utility list
 default_utils="base32 base64 basename bech32 cat cksum cli comm cp cut date dircolors dirname echo env expand
-expr factor false fmt fold git hashsum head join keypair link ln ls mkdir mktemp more mv nl od paste post post_event printenv
+expr factor false fmt fold get_relays git hashsum head join keypair link ln ls mkdir mktemp more mv nl od paste post post_event printenv
 printf ptx pwd readlink realpath rm rmdir seq shred shuf sleep sort split sum tac tail tee template
 test tr true truncate tsort tui unexpand uniq wc weeble wobble xq yes"
 

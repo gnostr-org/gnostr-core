@@ -87,6 +87,7 @@ feat_common_core = [
   "fmt",
   "fold",
   "git", ##gnostr
+  "get_relays", ##gnostr
   "hashsum",
   "head",
   "join",
@@ -421,6 +422,7 @@ factor = { optional = true, version = "0.0.27", package = "uu_factor", path = "s
 false = { optional = true, version = "0.0.27", package = "uu_false", path = "src/uu/false" }
 fmt = { optional = true, version = "0.0.27", package = "uu_fmt", path = "src/uu/fmt" }
 fold = { optional = true, version = "0.0.27", package = "uu_fold", path = "src/uu/fold" }
+get_relays = { optional = true, version = "0.0.27", package = "uu_get_relays", path = "src/uu/get_relays" }
 git = { optional = true, version = "0.0.27", package = "uu_git", path = "src/uu/git" }
 groups = { optional = true, version = "0.0.27", package = "uu_groups", path = "src/uu/groups" }
 hashsum = { optional = true, version = "0.0.27", package = "uu_hashsum", path = "src/uu/hashsum" }
