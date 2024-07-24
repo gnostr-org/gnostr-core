@@ -90,6 +90,7 @@ PROGS       := \
 	head \
 	join \
 	keypair \
+	legit \
 	link \
 	ln \
 	ls \
@@ -220,6 +221,7 @@ TEST_PROGS  := \
 	head \
 	install \
 	keypair \
+	legit \
 	link \
 	ln \
 	ls \

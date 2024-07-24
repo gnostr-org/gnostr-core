@@ -92,6 +92,7 @@ feat_common_core = [
   "head",
   "join",
   "keypair", ##gnostr
+  "legit", ##gnostr
   "link",
   "ln",
   "ls",
@@ -434,6 +435,7 @@ install = { optional = true, version = "0.0.27", package = "uu_install", path = 
 join = { optional = true, version = "0.0.27", package = "uu_join", path = "src/uu/join" }
 keypair = { optional = true, version = "0.0.27", package = "uu_keypair", path = "src/uu/keypair" }
 kill = { optional = true, version = "0.0.27", package = "uu_kill", path = "src/uu/kill" }
+legit = { optional = true, version = "0.0.27", package = "uu_legit", path = "src/uu/legit" }
 link = { optional = true, version = "0.0.27", package = "uu_link", path = "src/uu/link" }
 ln = { optional = true, version = "0.0.27", package = "uu_ln", path = "src/uu/ln" }
 ls = { optional = true, version = "0.0.27", package = "uu_ls", path = "src/uu/ls" }

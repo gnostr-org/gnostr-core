@@ -1050,6 +1050,7 @@ dependencies = [
  "uu_join",
  "uu_keypair",
  "uu_kill",
+ "uu_legit",
  "uu_link",
  "uu_ln",
  "uu_logname",
@@ -2916,6 +2917,14 @@ version = "0.0.27"
 dependencies = [
  "clap",
  "nix",
+ "uucore",
+]
+
+[[package]]
+name = "uu_legit"
+version = "0.0.27"
+dependencies = [
+ "clap",
  "uucore",
 ]
 
