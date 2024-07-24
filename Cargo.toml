@@ -128,6 +128,7 @@ feat_common_core = [
   "true",
   "truncate",
   "tsort",
+  "tui", ##gnostr
   "touch",
   "unexpand",
   "uniq",
@@ -483,6 +484,7 @@ true = { optional = true, version = "0.0.27", package = "uu_true", path = "src/u
 truncate = { optional = true, version = "0.0.27", package = "uu_truncate", path = "src/uu/truncate" }
 tsort = { optional = true, version = "0.0.27", package = "uu_tsort", path = "src/uu/tsort" }
 tty = { optional = true, version = "0.0.27", package = "uu_tty", path = "src/uu/tty" }
+tui = { optional = true, version = "0.0.27", package = "uu_tui", path = "src/uu/tui" }
 uname = { optional = true, version = "0.0.27", package = "uu_uname", path = "src/uu/uname" }
 unexpand = { optional = true, version = "0.0.27", package = "uu_unexpand", path = "src/uu/unexpand" }
 uniq = { optional = true, version = "0.0.27", package = "uu_uniq", path = "src/uu/uniq" }
