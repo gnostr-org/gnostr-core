@@ -130,6 +130,7 @@ PROGS       := \
 	uniq \
 	vdir \
 	wc \
+	weeble \
 	whoami \
 	xq \
 	yes
