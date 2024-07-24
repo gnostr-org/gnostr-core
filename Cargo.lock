@@ -1010,6 +1010,7 @@ dependencies = [
  "uu_basename",
  "uu_basenc",
  "uu_bech32",
+ "uu_blockheight",
  "uu_cat",
  "uu_chcon",
  "uu_chgrp",
@@ -2524,6 +2525,14 @@ dependencies = [
 
 [[package]]
 name = "uu_bech32"
+version = "0.0.27"
+dependencies = [
+ "clap",
+ "uucore",
+]
+
+[[package]]
+name = "uu_blockheight"
 version = "0.0.27"
 dependencies = [
  "clap",
