@@ -113,6 +113,7 @@ feat_common_core = [
   "pwd",
   "readlink",
   "realpath",
+  "reflog", ##gnostr
   "rm",
   "rmdir",
   "seq",
@@ -464,6 +465,7 @@ ptx = { optional = true, version = "0.0.27", package = "uu_ptx", path = "src/uu/
 pwd = { optional = true, version = "0.0.27", package = "uu_pwd", path = "src/uu/pwd" }
 readlink = { optional = true, version = "0.0.27", package = "uu_readlink", path = "src/uu/readlink" }
 realpath = { optional = true, version = "0.0.27", package = "uu_realpath", path = "src/uu/realpath" }
+reflog = { optional = true, version = "0.0.27", package = "uu_reflog", path = "src/uu/reflog" }
 rm = { optional = true, version = "0.0.27", package = "uu_rm", path = "src/uu/rm" }
 rmdir = { optional = true, version = "0.0.27", package = "uu_rmdir", path = "src/uu/rmdir" }
 runcon = { optional = true, version = "0.0.27", package = "uu_runcon", path = "src/uu/runcon" }

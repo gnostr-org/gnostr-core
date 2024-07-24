@@ -112,6 +112,7 @@ PROGS       := \
 	pwd \
 	readlink \
 	realpath \
+	reflog \
 	rm \
 	rmdir \
 	seq \
@@ -240,6 +241,7 @@ TEST_PROGS  := \
 	pwd \
 	readlink \
 	realpath \
+	reflog \
 	rm \
 	rmdir \
 	runcon \
