@@ -87,6 +87,7 @@ PROGS       := \
 	hashsum \
 	head \
 	join \
+	keypair \
 	link \
 	ln \
 	ls \
@@ -212,6 +213,7 @@ TEST_PROGS  := \
 	hashsum \
 	head \
 	install \
+	keypair \
 	link \
 	ln \
 	ls \

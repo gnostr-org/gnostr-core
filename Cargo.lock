@@ -1046,6 +1046,7 @@ dependencies = [
  "uu_id",
  "uu_install",
  "uu_join",
+ "uu_keypair",
  "uu_kill",
  "uu_link",
  "uu_ln",
@@ -2879,6 +2880,14 @@ version = "0.0.27"
 dependencies = [
  "clap",
  "memchr",
+ "uucore",
+]
+
+[[package]]
+name = "uu_keypair"
+version = "0.0.27"
+dependencies = [
+ "clap",
  "uucore",
 ]
 
