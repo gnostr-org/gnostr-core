@@ -63,6 +63,7 @@ feat_common_core = [
   "basename",
   "basenc",
   "bech32", ##gnostr
+  "blockheight", ##gnostr
   "cat",
   "cksum",
   "comm",
@@ -389,6 +390,7 @@ base64 = { optional = true, version = "0.0.27", package = "uu_base64", path = "s
 basename = { optional = true, version = "0.0.27", package = "uu_basename", path = "src/uu/basename" }
 basenc = { optional = true, version = "0.0.27", package = "uu_basenc", path = "src/uu/basenc" }
 bech32 = { optional = true, version = "0.0.27", package = "uu_bech32", path = "src/uu/bech32" }
+blockheight = { optional = true, version = "0.0.27", package = "uu_blockheight", path = "src/uu/blockheight" }
 cat = { optional = true, version = "0.0.27", package = "uu_cat", path = "src/uu/cat" }
 chcon = { optional = true, version = "0.0.27", package = "uu_chcon", path = "src/uu/chcon" }
 chgrp = { optional = true, version = "0.0.27", package = "uu_chgrp", path = "src/uu/chgrp" }
