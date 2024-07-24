@@ -129,6 +129,7 @@ PROGS       := \
 	true \
 	truncate \
 	tsort \
+	tui \
 	unexpand \
 	uniq \
 	vdir \
@@ -253,6 +254,7 @@ TEST_PROGS  := \
 	true \
 	truncate \
 	tsort \
+	tui \
 	uname \
 	unexpand \
 	uniq \
