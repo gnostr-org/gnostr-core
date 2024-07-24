@@ -532,6 +532,7 @@ uucore = { workspace = true, features = [
 walkdir = { workspace = true }
 hex-literal = "0.4.1"
 rstest = { workspace = true }
+## nextest = "0.0.0"
 
 [target.'cfg(any(target_os = "linux", target_os = "android"))'.dev-dependencies]
 procfs = { version = "0.16", default-features = false }
