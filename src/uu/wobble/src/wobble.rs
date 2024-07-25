@@ -127,7 +127,6 @@ pub fn uu_app() -> Command {
         )
 }
 
-
 async fn print_wobble() {
     let since_the_epoch = SystemTime::now()
         .duration_since(SystemTime::UNIX_EPOCH)
