@@ -1075,6 +1075,7 @@ dependencies = [
  "uu_pr",
  "uu_printenv",
  "uu_printf",
+ "uu_privkey_to_bech32",
  "uu_ptx",
  "uu_pwd",
  "uu_readlink",
@@ -3148,6 +3149,14 @@ dependencies = [
 
 [[package]]
 name = "uu_printf"
+version = "0.0.27"
+dependencies = [
+ "clap",
+ "uucore",
+]
+
+[[package]]
+name = "uu_privkey_to_bech32"
 version = "0.0.27"
 dependencies = [
  "clap",

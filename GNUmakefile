@@ -108,6 +108,7 @@ PROGS       := \
 	pr \
 	printenv \
 	printf \
+	privkey_to_bech32 \
 	ptx \
 	pwd \
 	readlink \
@@ -237,6 +238,7 @@ TEST_PROGS  := \
 	pinky \
 	pr \
 	printf \
+	privkey_to_bech32 \
 	ptx \
 	pwd \
 	readlink \
