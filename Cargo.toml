@@ -101,6 +101,7 @@ feat_common_core = [
   "more",
   "mv",
   "nl",
+  "nip11", ##gnostr
   "numfmt",
   "od",
   "paste",
@@ -451,6 +452,7 @@ more = { optional = true, version = "0.0.27", package = "uu_more", path = "src/u
 mv = { optional = true, version = "0.0.27", package = "uu_mv", path = "src/uu/mv" }
 nice = { optional = true, version = "0.0.27", package = "uu_nice", path = "src/uu/nice" }
 nl = { optional = true, version = "0.0.27", package = "uu_nl", path = "src/uu/nl" }
+nip11 = { optional = true, version = "0.0.27", package = "uu_nip11", path = "src/uu/nip11" }
 nohup = { optional = true, version = "0.0.27", package = "uu_nohup", path = "src/uu/nohup" }
 nproc = { optional = true, version = "0.0.27", package = "uu_nproc", path = "src/uu/nproc" }
 numfmt = { optional = true, version = "0.0.27", package = "uu_numfmt", path = "src/uu/numfmt" }

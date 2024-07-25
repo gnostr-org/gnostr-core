@@ -1062,6 +1062,7 @@ dependencies = [
  "uu_more",
  "uu_mv",
  "uu_nice",
+ "uu_nip11",
  "uu_nl",
  "uu_nohup",
  "uu_nproc",
@@ -3039,6 +3040,14 @@ dependencies = [
  "clap",
  "libc",
  "nix",
+ "uucore",
+]
+
+[[package]]
+name = "uu_nip11"
+version = "0.0.27"
+dependencies = [
+ "clap",
  "uucore",
 ]
 

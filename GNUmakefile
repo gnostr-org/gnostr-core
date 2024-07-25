@@ -99,6 +99,7 @@ PROGS       := \
 	more \
 	mv \
 	nl \
+	nip11 \
 	numfmt \
 	nproc \
 	od \
@@ -232,6 +233,7 @@ TEST_PROGS  := \
 	mktemp \
 	mv \
 	nl \
+	nip11 \
 	numfmt \
 	od \
 	paste \
