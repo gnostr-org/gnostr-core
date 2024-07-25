@@ -110,6 +110,7 @@ PROGS       := \
 	printf \
 	privkey_to_bech32 \
 	ptx \
+	pubkey_to_bech32 \
 	pwd \
 	readlink \
 	realpath \
@@ -240,6 +241,7 @@ TEST_PROGS  := \
 	printf \
 	privkey_to_bech32 \
 	ptx \
+	pubkey_to_bech32 \
 	pwd \
 	readlink \
 	realpath \

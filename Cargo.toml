@@ -111,6 +111,7 @@ feat_common_core = [
   "printf",
   "privkey_to_bech32", ##gnostr
   "ptx",
+  "pubkey_to_bech32", ##gnostr
   "pwd",
   "readlink",
   "realpath",
@@ -464,6 +465,7 @@ privkey_to_bech32 = { optional = true, version = "0.0.27", package = "uu_privkey
 post = { optional = true, version = "0.0.27", package = "uu_post", path = "src/uu/post" }
 post_event = { optional = true, version = "0.0.27", package = "uu_post_event", path = "src/uu/post-event" }
 ptx = { optional = true, version = "0.0.27", package = "uu_ptx", path = "src/uu/ptx" }
+pubkey_to_bech32 = { optional = true, version = "0.0.27", package = "uu_pubkey_to_bech32", path = "src/uu/pubkey_to_bech32" }
 pwd = { optional = true, version = "0.0.27", package = "uu_pwd", path = "src/uu/pwd" }
 readlink = { optional = true, version = "0.0.27", package = "uu_readlink", path = "src/uu/readlink" }
 realpath = { optional = true, version = "0.0.27", package = "uu_realpath", path = "src/uu/realpath" }
