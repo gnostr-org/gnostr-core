@@ -4113,6 +4113,8 @@ name = "uu_wobble"
 version = "0.0.27"
 dependencies = [
  "clap",
+ "futures",
+ "reqwest",
  "uucore",
 ]
 
