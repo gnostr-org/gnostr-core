@@ -22,7 +22,8 @@ ME_parent_dir_abs="$("${REALPATH}" -mP -- "${ME_parent_dir}" || "${REALPATH}" --
 # refs: <https://forge.rust-lang.org/release/platform-support.html> , <https://docs.rs/platforms/0.2.1/platforms/platform/tier1/index.html>
 
 # default ("Tier 1" cross-platform) utility list
-default_utils="base32 base64 basename bech32 cat cksum cli comm cp cut date dircolors dirname echo env expand
+default_utils="base32 base64 basename bech32 cat cksum cli comm cp cut date dircolors dirname echo
+encrypt_privkey env expand
 expr factor false fmt fold get_relays git hashsum head join keypair legit link ln ls mkdir mktemp more mv nip11 nl od paste post post_event printenv
 printf privkey_to_bech32 ptx pubkey_to_bech32 pwd readlink realpath reflog rm rmdir seq shred shuf sleep sort split sum tac tail tee template
 test tr true truncate tsort tui unexpand uniq wc weeble wobble xq yes"

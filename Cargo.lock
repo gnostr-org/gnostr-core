@@ -1031,6 +1031,7 @@ dependencies = [
  "uu_dirname",
  "uu_du",
  "uu_echo",
+ "uu_encrypt_privkey",
  "uu_env",
  "uu_expand",
  "uu_expr",
@@ -2738,6 +2739,14 @@ dependencies = [
 
 [[package]]
 name = "uu_echo"
+version = "0.0.27"
+dependencies = [
+ "clap",
+ "uucore",
+]
+
+[[package]]
+name = "uu_encrypt_privkey"
 version = "0.0.27"
 dependencies = [
  "clap",

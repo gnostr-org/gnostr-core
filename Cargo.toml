@@ -79,6 +79,7 @@ feat_common_core = [
   "dd",
   "du",
   "echo",
+  "encrypt_privkey", ##gnostr
   "env",
   "expand",
   "expr",
@@ -420,6 +421,7 @@ dircolors = { optional = true, version = "0.0.27", package = "uu_dircolors", pat
 dirname = { optional = true, version = "0.0.27", package = "uu_dirname", path = "src/uu/dirname" }
 du = { optional = true, version = "0.0.27", package = "uu_du", path = "src/uu/du" }
 echo = { optional = true, version = "0.0.27", package = "uu_echo", path = "src/uu/echo" }
+encrypt_privkey = { optional = true, version = "0.0.27", package = "uu_encrypt_privkey", path = "src/uu/encrypt_privkey" }
 env = { optional = true, version = "0.0.27", package = "uu_env", path = "src/uu/env" }
 expand = { optional = true, version = "0.0.27", package = "uu_expand", path = "src/uu/expand" }
 expr = { optional = true, version = "0.0.27", package = "uu_expr", path = "src/uu/expr" }

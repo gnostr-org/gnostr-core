@@ -77,6 +77,7 @@ PROGS       := \
 	dircolors \
 	dirname \
 	echo \
+	encrypt_privkey \
 	env \
 	expand \
 	expr \
@@ -214,6 +215,7 @@ TEST_PROGS  := \
 	dircolors \
 	dirname \
 	echo \
+	encrypt_privkey \
 	env \
 	expr \
 	factor \
