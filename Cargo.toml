@@ -1,5 +1,4 @@
-# coreutils (uutils)
-# * see the repository LICENSE, README, and CONTRIBUTING files for more information
+# coreutils (uutils)# * see the repository LICENSE, README, and CONTRIBUTING files for more information
 
 # spell-checker:ignore (libs) bigdecimal datetime serde bincode fundu gethostid kqueue libselinux mangen memmap procfs uuhelp
 
@@ -379,20 +378,6 @@ uu_ls = { version = ">=0.0.18", path = "src/uu/ls" }
 uu_base32 = { version = ">=0.0.18", path = "src/uu/base32" }
 
 [dependencies]
-clap = { workspace = true }
-once_cell = { workspace = true }
-uucore = { workspace = true }
-clap_complete = { workspace = true }
-clap_mangen = { workspace = true }
-phf = { workspace = true }
-selinux = { workspace = true, optional = true }
-textwrap = { workspace = true }
-zip = { workspace = true, optional = true }
-
-uuhelp_parser = { optional = true, version = ">=0.0.19", path = "src/uuhelp_parser" }
-
-# * uutils
-uu_test = { optional = true, version = "0.0.27", package = "uu_test", path = "src/uu/test" }
 #
 arch = { optional = true, version = "0.0.27", package = "uu_arch", path = "src/uu/arch" }
 base32 = { optional = true, version = "0.0.27", package = "uu_base32", path = "src/uu/base32" }
@@ -408,6 +393,9 @@ chmod = { optional = true, version = "0.0.27", package = "uu_chmod", path = "src
 chown = { optional = true, version = "0.0.27", package = "uu_chown", path = "src/uu/chown" }
 chroot = { optional = true, version = "0.0.27", package = "uu_chroot", path = "src/uu/chroot" }
 cksum = { optional = true, version = "0.0.27", package = "uu_cksum", path = "src/uu/cksum" }
+clap = { workspace = true }
+clap_complete = { workspace = true }
+clap_mangen = { workspace = true }
 cli = { optional = true, version = "0.0.27", package = "uu_cli", path = "src/uu/cli" }
 comm = { optional = true, version = "0.0.27", package = "uu_comm", path = "src/uu/comm" }
 cp = { optional = true, version = "0.0.27", package = "uu_cp", path = "src/uu/cp" }
@@ -444,8 +432,8 @@ kill = { optional = true, version = "0.0.27", package = "uu_kill", path = "src/u
 legit = { optional = true, version = "0.0.27", package = "uu_legit", path = "src/uu/legit" }
 link = { optional = true, version = "0.0.27", package = "uu_link", path = "src/uu/link" }
 ln = { optional = true, version = "0.0.27", package = "uu_ln", path = "src/uu/ln" }
-ls = { optional = true, version = "0.0.27", package = "uu_ls", path = "src/uu/ls" }
 logname = { optional = true, version = "0.0.27", package = "uu_logname", path = "src/uu/logname" }
+ls = { optional = true, version = "0.0.27", package = "uu_ls", path = "src/uu/ls" }
 mkdir = { optional = true, version = "0.0.27", package = "uu_mkdir", path = "src/uu/mkdir" }
 mkfifo = { optional = true, version = "0.0.27", package = "uu_mkfifo", path = "src/uu/mkfifo" }
 mknod = { optional = true, version = "0.0.27", package = "uu_mknod", path = "src/uu/mknod" }
@@ -453,21 +441,23 @@ mktemp = { optional = true, version = "0.0.27", package = "uu_mktemp", path = "s
 more = { optional = true, version = "0.0.27", package = "uu_more", path = "src/uu/more" }
 mv = { optional = true, version = "0.0.27", package = "uu_mv", path = "src/uu/mv" }
 nice = { optional = true, version = "0.0.27", package = "uu_nice", path = "src/uu/nice" }
-nl = { optional = true, version = "0.0.27", package = "uu_nl", path = "src/uu/nl" }
 nip11 = { optional = true, version = "0.0.27", package = "uu_nip11", path = "src/uu/nip11" }
+nl = { optional = true, version = "0.0.27", package = "uu_nl", path = "src/uu/nl" }
 nohup = { optional = true, version = "0.0.27", package = "uu_nohup", path = "src/uu/nohup" }
 nproc = { optional = true, version = "0.0.27", package = "uu_nproc", path = "src/uu/nproc" }
 numfmt = { optional = true, version = "0.0.27", package = "uu_numfmt", path = "src/uu/numfmt" }
 od = { optional = true, version = "0.0.27", package = "uu_od", path = "src/uu/od" }
+once_cell = { workspace = true }
 paste = { optional = true, version = "0.0.27", package = "uu_paste", path = "src/uu/paste" }
 pathchk = { optional = true, version = "0.0.27", package = "uu_pathchk", path = "src/uu/pathchk" }
+phf = { workspace = true }
 pinky = { optional = true, version = "0.0.27", package = "uu_pinky", path = "src/uu/pinky" }
+post = { optional = true, version = "0.0.27", package = "uu_post", path = "src/uu/post" }
+post_event = { optional = true, version = "0.0.27", package = "uu_post_event", path = "src/uu/post-event" }
 pr = { optional = true, version = "0.0.27", package = "uu_pr", path = "src/uu/pr" }
 printenv = { optional = true, version = "0.0.27", package = "uu_printenv", path = "src/uu/printenv" }
 printf = { optional = true, version = "0.0.27", package = "uu_printf", path = "src/uu/printf" }
 privkey_to_bech32 = { optional = true, version = "0.0.27", package = "uu_privkey_to_bech32", path = "src/uu/privkey_to_bech32" }
-post = { optional = true, version = "0.0.27", package = "uu_post", path = "src/uu/post" }
-post_event = { optional = true, version = "0.0.27", package = "uu_post_event", path = "src/uu/post-event" }
 ptx = { optional = true, version = "0.0.27", package = "uu_ptx", path = "src/uu/ptx" }
 pubkey_to_bech32 = { optional = true, version = "0.0.27", package = "uu_pubkey_to_bech32", path = "src/uu/pubkey_to_bech32" }
 pwd = { optional = true, version = "0.0.27", package = "uu_pwd", path = "src/uu/pwd" }
@@ -477,6 +467,7 @@ reflog = { optional = true, version = "0.0.27", package = "uu_reflog", path = "s
 rm = { optional = true, version = "0.0.27", package = "uu_rm", path = "src/uu/rm" }
 rmdir = { optional = true, version = "0.0.27", package = "uu_rmdir", path = "src/uu/rmdir" }
 runcon = { optional = true, version = "0.0.27", package = "uu_runcon", path = "src/uu/runcon" }
+selinux = { workspace = true, optional = true }
 seq = { optional = true, version = "0.0.27", package = "uu_seq", path = "src/uu/seq" }
 shred = { optional = true, version = "0.0.27", package = "uu_shred", path = "src/uu/shred" }
 shuf = { optional = true, version = "0.0.27", package = "uu_shuf", path = "src/uu/shuf" }
@@ -492,6 +483,7 @@ tac = { optional = true, version = "0.0.27", package = "uu_tac", path = "src/uu/
 tail = { optional = true, version = "0.0.27", package = "uu_tail", path = "src/uu/tail" }
 tee = { optional = true, version = "0.0.27", package = "uu_tee", path = "src/uu/tee" }
 template = { optional = true, version = "0.0.27", package = "uu_template", path = "src/uu/template" }
+textwrap = { workspace = true }
 timeout = { optional = true, version = "0.0.27", package = "uu_timeout", path = "src/uu/timeout" }
 touch = { optional = true, version = "0.0.27", package = "uu_touch", path = "src/uu/touch" }
 tr = { optional = true, version = "0.0.27", package = "uu_tr", path = "src/uu/tr" }
@@ -506,17 +498,22 @@ uniq = { optional = true, version = "0.0.27", package = "uu_uniq", path = "src/u
 unlink = { optional = true, version = "0.0.27", package = "uu_unlink", path = "src/uu/unlink" }
 uptime = { optional = true, version = "0.0.27", package = "uu_uptime", path = "src/uu/uptime" }
 users = { optional = true, version = "0.0.27", package = "uu_users", path = "src/uu/users" }
+
+# * uutils
+uu_test = { optional = true, version = "0.0.27", package = "uu_test", path = "src/uu/test" }
+uucore = { workspace = true }
+
+uuhelp_parser = { optional = true, version = ">=0.0.19", path = "src/uuhelp_parser" }
 vdir = { optional = true, version = "0.0.27", package = "uu_vdir", path = "src/uu/vdir" }
 wc = { optional = true, version = "0.0.27", package = "uu_wc", path = "src/uu/wc" }
 weeble = { optional = true, version = "0.0.27", package = "uu_weeble", path = "src/uu/weeble" }
-wobble = { optional = true, version = "0.0.27", package = "uu_wobble", path = "src/uu/wobble" }
 who = { optional = true, version = "0.0.27", package = "uu_who", path = "src/uu/who" }
 whoami = { optional = true, version = "0.0.27", package = "uu_whoami", path = "src/uu/whoami" }
+wobble = { optional = true, version = "0.0.27", package = "uu_wobble", path = "src/uu/wobble" }
 xq = { optional = true, version = "0.0.27", package = "uu_xq", path = "src/uu/xq" }
 yes = { optional = true, version = "0.0.27", package = "uu_yes", path = "src/uu/yes" }
-
-# this breaks clippy linting with: "tests/by-util/test_factor_benches.rs: No such file or directory (os error 2)"
-# factor_benches = { optional = true, version = "0.0.0", package = "uu_factor_benches", path = "tests/benches/factor" }
+zip = { workspace = true, optional = true }
+# this breaks clippy linting with: "tests/by-util/test_factor_benches.rs: No such file or directory (os error 2)"# factor_benches = { optional = true, version = "0.0.0", package = "uu_factor_benches", path = "tests/benches/factor" }
 
 #
 # * pinned transitive dependencies
@@ -527,11 +524,13 @@ yes = { optional = true, version = "0.0.27", package = "uu_yes", path = "src/uu/
 chrono = { workspace = true }
 filetime = { workspace = true }
 glob = { workspace = true }
+hex-literal = "0.4.1"
 libc = { workspace = true }
 num-prime = { workspace = true }
 pretty_assertions = "1.4.0"
 rand = { workspace = true }
 regex = { workspace = true }
+rstest = { workspace = true }
 sha1 = { version = "0.10.6", features = ["std"] }
 tempfile = { workspace = true }
 time = { workspace = true, features = ["local-offset"] }
@@ -544,8 +543,6 @@ uucore = { workspace = true, features = [
   "utmpx",
 ] }
 walkdir = { workspace = true }
-hex-literal = "0.4.1"
-rstest = { workspace = true }
 ## nextest = "0.0.0"
 
 [target.'cfg(any(target_os = "linux", target_os = "android"))'.dev-dependencies]
@@ -563,7 +560,6 @@ xattr = { workspace = true }
 serde = { version = "1.0.202", features = ["derive"] }
 bincode = { version = "1.3.3" }
 serde-big-array = "0.5.1"
-
 
 [build-dependencies]
 phf_codegen = { workspace = true }
