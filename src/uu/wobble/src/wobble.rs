@@ -12,6 +12,13 @@ use uucore::error::{UResult, UUsageError};
 use uucore::line_ending::LineEnding;
 use uucore::{format_usage, help_about, help_usage};
 
+mod blockheight;
+use blockheight::get_blockheight;
+use futures::executor::block_on;
+use reqwest::Url;
+use std::io::Read;
+use std::time::SystemTime;
+
 static ABOUT: &str = help_about!("wobble.md");
 
 const USAGE: &str = help_usage!("wobble.md");
@@ -25,6 +32,10 @@ pub mod options {
 
 #[uucore::main]
 pub fn uumain(args: impl uucore::Args) -> UResult<()> {
+    // let future = print_wobble(); // Nothing is printed
+    // block_on(future);
+    // std::process::exit(0);
+
     let args = args.collect_lossy();
 
     //
@@ -39,7 +50,10 @@ pub fn uumain(args: impl uucore::Args) -> UResult<()> {
         .unwrap_or_default()
         .collect::<Vec<_>>();
     if name_args.is_empty() {
-        return Err(UUsageError::new(1, "missing operand".to_string()));
+        //return Err(UUsageError::new(1, "missing operand".to_string()));
+        let future = print_wobble(); // Nothing is printed
+        block_on(future);
+        std::process::exit(0);
     }
     let multiple_paths =
         matches.get_one::<String>(options::SUFFIX).is_some() || matches.get_flag(options::MULTIPLE);
@@ -113,7 +127,33 @@ pub fn uu_app() -> Command {
         )
 }
 
+
+async fn print_wobble() {
+    let since_the_epoch = SystemTime::now()
+        .duration_since(SystemTime::UNIX_EPOCH)
+        .expect("get millis error");
+    let seconds = since_the_epoch.as_secs();
+    let subsec_millis = since_the_epoch.subsec_millis() as u64;
+    let now_millis = seconds * 1000 + subsec_millis;
+    //println!("now millis: {}", seconds * 1000 + subsec_millis);
+
+    let _ = get_blockheight();
+    let url = Url::parse("https://mempool.space/api/blocks/tip/height").unwrap();
+    let mut res = reqwest::blocking::get(url).unwrap();
+
+    let mut tmp_string = String::new();
+    res.read_to_string(&mut tmp_string).unwrap();
+    let tmp_u64 = tmp_string.parse::<u64>().unwrap_or(0);
+
+    //TODO:impl gnostr-wobble_millis
+    //let wobble = now_millis as f64 % tmp_u64 as f64;
+    let wobble = seconds as f64 % tmp_u64 as f64;
+    print!("{}", format!("{}", wobble.floor()));
+}
+
 fn wobble(fullname: &str, suffix: &str) -> String {
+    let future = print_wobble(); // Nothing is printed
+    block_on(future);
     // Remove all platform-specific path separators from the end.
     let path = fullname.trim_end_matches(is_separator);
 
