@@ -2,7 +2,8 @@
 
 # Config options
 PROFILE         ?= debug
-MULTICALL       ?= n
+##gnostr default is MULTICALL
+MULTICALL       ?= y
 INSTALL         ?= install
 ifneq (,$(filter install, $(MAKECMDGOALS)))
 override PROFILE:=release
@@ -29,6 +30,7 @@ INSTALLDIR_BIN=$(DESTDIR)$(BINDIR)
 
 #prefix to apply to coreutils binary and all tool binaries
 PROG_PREFIX =gnostr-
+export PROG_PREFIX
 
 # This won't support any directory with spaces in its name, but you can just
 # make a symlink without spaces that points to the directory.
@@ -55,13 +57,19 @@ ifeq ($(SELINUX_ENABLED),)
 endif
 
 # Possible programs
+# the function definition may have undescores
+# while the resulting executable should have dashes
+# so PROGS list has dashes
 PROGS       := \
 	base32 \
 	base64 \
 	basenc \
 	basename \
+	bech32 \
+	blockheight \
 	cat \
 	cksum \
+	cli \
 	comm \
 	cp \
 	csplit \
@@ -73,6 +81,8 @@ PROGS       := \
 	dircolors \
 	dirname \
 	echo \
+	encrypt-privkey \
+	encrypt_privkey \
 	env \
 	expand \
 	expr \
@@ -80,9 +90,14 @@ PROGS       := \
 	false \
 	fmt \
 	fold \
+	get-relays \
+	get_relays \
+	git \
 	hashsum \
 	head \
 	join \
+	keypair \
+	legit \
 	link \
 	ln \
 	ls \
@@ -91,17 +106,26 @@ PROGS       := \
 	more \
 	mv \
 	nl \
+	nip11 \
 	numfmt \
 	nproc \
 	od \
 	paste \
+	post \
+	post-event \
+	post_event \
 	pr \
 	printenv \
 	printf \
+	privkey-to-bech32 \
+	privkey_to_bech32 \
 	ptx \
+	pubkey-to-bech32 \
+	pubkey_to_bech32 \
 	pwd \
 	readlink \
 	realpath \
+	reflog \
 	rm \
 	rmdir \
 	seq \
@@ -121,11 +145,15 @@ PROGS       := \
 	true \
 	truncate \
 	tsort \
+	tui \
 	unexpand \
 	uniq \
 	vdir \
 	wc \
+	weeble \
+	wobble \
 	whoami \
+	xq \
 	yes
 
 UNIX_PROGS := \
@@ -179,12 +207,15 @@ TEST_PROGS  := \
 	base32 \
 	base64 \
 	basename \
+	bech32 \
+	blockheight \
 	cat \
 	chcon \
 	chgrp \
 	chmod \
 	chown \
 	cksum \
+	cli \
 	comm \
 	cp \
 	csplit \
@@ -193,14 +224,19 @@ TEST_PROGS  := \
 	dircolors \
 	dirname \
 	echo \
+	encrypt-privkey \
 	env \
 	expr \
 	factor \
 	false \
 	fold \
+	get-relays \
+	git \
 	hashsum \
 	head \
 	install \
+	keypair \
+	legit \
 	link \
 	ln \
 	ls \
@@ -208,6 +244,7 @@ TEST_PROGS  := \
 	mktemp \
 	mv \
 	nl \
+	nip11 \
 	numfmt \
 	od \
 	paste \
@@ -215,10 +252,13 @@ TEST_PROGS  := \
 	pinky \
 	pr \
 	printf \
+	privkey-to-bech32 \
 	ptx \
+	pubkey-to-bech32 \
 	pwd \
 	readlink \
 	realpath \
+	reflog \
 	rm \
 	rmdir \
 	runcon \
@@ -238,6 +278,7 @@ TEST_PROGS  := \
 	true \
 	truncate \
 	tsort \
+	tui \
 	uname \
 	unexpand \
 	uniq \
@@ -264,8 +305,10 @@ test_busybox_$(1):
 endef
 
 # Output names
+## we subst dashes for underscores in the PROGS list here
+## REF: PROGS and build: build-pkgs build-coreutils
 EXES        := \
-	$(sort $(filter $(UTILS),$(filter-out $(SKIP_UTILS),$(PROGS))))
+	$(sort $(filter $(UTILS),$(filter-out $(SKIP_UTILS),$(subst -,_,$(PROGS)))))
 
 INSTALLEES  := ${EXES}
 ifeq (${MULTICALL}, y)
@@ -278,8 +321,11 @@ do_install = $(INSTALL) ${1}
 use_default := 1
 
 build-pkgs:
+	echo $(EXES)
 ifneq (${MULTICALL}, y)
-	${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(pkg))
+	${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst -,_,$(pkg)))
+	##${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst _,-,$(pkg)))
+	##${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst -,_,$(pkg)))
 endif
 
 build-coreutils:
@@ -341,9 +387,12 @@ distclean: clean
 	$(CARGO) clean $(CARGOFLAGS) && $(CARGO) update $(CARGOFLAGS)
 
 manpages: build-coreutils
-	mkdir -p $(BUILDDIR)/man/
+	$(SUDO) mkdir -p $(BUILDDIR)/man/
 	$(foreach prog, $(INSTALLEES), \
 		$(BUILDDIR)/coreutils manpage $(prog) > $(BUILDDIR)/man/$(PROG_PREFIX)$(prog).1; \
+	)
+	$(foreach prog, $(INSTALLEES), \
+		$(BUILDDIR)/gnostr-rs manpage $(prog) > $(BUILDDIR)/man/$(PROG_PREFIX)$(prog).1; \
 	)
 
 completions: build-coreutils
@@ -354,26 +403,36 @@ completions: build-coreutils
 		$(BUILDDIR)/coreutils completion $(prog) fish > $(BUILDDIR)/completions/fish/$(PROG_PREFIX)$(prog).fish; \
 	)
 
+install-test: #$(shell 2>/dev/null)
+	$(MAKE) install && git gnostr weeble && echo && git-gnostr blockheight && echo && gnostr-rs wobble && man gnostr-weeble
+
 install: build manpages completions
 	mkdir -p $(INSTALLDIR_BIN)
+	echo $(EXES)
+	echo $(INSTALLEES)
 ifeq (${MULTICALL}, y)
 	$(INSTALL) $(BUILDDIR)/coreutils $(INSTALLDIR_BIN)/$(PROG_PREFIX)coreutils
+	$(INSTALL) $(BUILDDIR)/gnostr-rs $(INSTALLDIR_BIN)/gnostr-rs
+	$(INSTALL) $(BUILDDIR)/git-gnostr $(INSTALLDIR_BIN)/git-gnostr
 	cd $(INSTALLDIR_BIN) && $(foreach prog, $(filter-out coreutils, $(INSTALLEES)), \
 		ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(prog) &&) :
+	#	ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(subst _,-,$(prog)) &&) :
+	#	ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(subst -,_,$(prog)) &&) :
 	$(if $(findstring test,$(INSTALLEES)), cd $(INSTALLDIR_BIN) && ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)[)
 else
 	$(foreach prog, $(INSTALLEES), \
-		$(INSTALL) $(BUILDDIR)/$(prog) $(INSTALLDIR_BIN)/$(PROG_PREFIX)$(prog);)
+		$(INSTALL) $(BUILDDIR)/$(prog) $(INSTALLDIR_BIN)/$(PROG_PREFIX)$(subst -,_,$(prog));)
+	#	$(INSTALL) $(BUILDDIR)/$(prog) $(INSTALLDIR_BIN)/$(PROG_PREFIX)$(subst _,-,$(prog));)
 	$(if $(findstring test,$(INSTALLEES)), $(INSTALL) $(BUILDDIR)/test $(INSTALLDIR_BIN)/$(PROG_PREFIX)[)
 endif
-	mkdir -p $(DESTDIR)$(DATAROOTDIR)/man/man1
+	$(SUDO) mkdir -p $(DESTDIR)$(DATAROOTDIR)/man/man1
 	$(foreach prog, $(INSTALLEES), \
 		$(INSTALL) $(BUILDDIR)/man/$(PROG_PREFIX)$(prog).1 $(DESTDIR)$(DATAROOTDIR)/man/man1/; \
 	)
 
-	mkdir -p $(DESTDIR)$(DATAROOTDIR)/zsh/site-functions
-	mkdir -p $(DESTDIR)$(DATAROOTDIR)/bash-completion/completions
-	mkdir -p $(DESTDIR)$(DATAROOTDIR)/fish/vendor_completions.d
+	$(SUDO) mkdir -p $(DESTDIR)$(DATAROOTDIR)/zsh/site-functions
+	$(SUDO) mkdir -p $(DESTDIR)$(DATAROOTDIR)/bash-completion/completions
+	$(SUDO) mkdir -p $(DESTDIR)$(DATAROOTDIR)/fish/vendor_completions.d
 	$(foreach prog, $(INSTALLEES), \
 		$(INSTALL) $(BUILDDIR)/completions/zsh/_$(PROG_PREFIX)$(prog) $(DESTDIR)$(DATAROOTDIR)/zsh/site-functions/; \
 		$(INSTALL) $(BUILDDIR)/completions/bash/$(PROG_PREFIX)$(prog) $(DESTDIR)$(DATAROOTDIR)/bash-completion/completions/; \

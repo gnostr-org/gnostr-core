@@ -47,8 +47,8 @@ cargo-bench:### 	cargo-bench
 cargo-t:cargo-test
 cargo-test:### 	cargo-test
 	@. $(HOME)/.cargo/env
-	#@cargo test
-	@cargo test -p jj-cli --test runner
+	@cargo test
+
 cargo-report:### 	cargo-report
 	@. $(HOME)/.cargo/env
 	cargo report future-incompatibilities --id 1
@@ -78,4 +78,4 @@ cargo-dist-manifest-global:### 	cargo dist manifest --artifacts=all
 	cargo dist manifest --artifacts=all
 # vim: set noexpandtab:
 # vim: set setfiletype make
->>>>>>> 43c74bc4a (cargo.mk:cargo-deps-gnostr-cli/grep)
+

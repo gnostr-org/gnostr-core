@@ -119,8 +119,12 @@ macro_rules! bin {
             use std::io::Write;
             // suppress extraneous error output for SIGPIPE failures/panics
             uucore::panic::mute_sigpipe_panic();
+
+            // ##gnostr
             // execute utility code
             let code = $util::uumain(uucore::args_os());
+            // ##gnostr
+
             // (defensively) flush stdout for utility prior to exit; see <https://github.com/rust-lang/rust/issues/23818>
             if let Err(e) = std::io::stdout().flush() {
                 eprintln!("Error flushing stdout: {}", e);
@@ -145,6 +149,8 @@ pub fn format_usage(s: &str) -> String {
 
 /// Used to check if the utility is the second argument.
 /// Used to check if we were called as a multicall binary (`coreutils <utility>`)
+/// Used to check if we were called as a multicall binary (`gnostr-rs <utility>`)
+/// Used to check if we were called as a multicall binary (`git-gnostr <utility>`)
 pub fn get_utility_is_second_arg() -> bool {
     crate::macros::UTILITY_IS_SECOND_ARG.load(Ordering::SeqCst)
 }

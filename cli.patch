@@ -1,0 +1,579 @@
+commit 28a398f6f1ffcd88ce0c2f9f272a5e07ee2c7600
+Author: randymcmillan <randymcmillan@protonmail.com>
+Date:   Wed Jul 24 12:05:45 2024 -0400
+
+    src/uu/cli:initial config
+
+diff --git a/Cargo.lock b/Cargo.lock
+index 6ac285f80..c7e8d5b2f 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -1018,6 +1018,7 @@ dependencies = [
+  "uu_chown",
+  "uu_chroot",
+  "uu_cksum",
++ "uu_cli",
+  "uu_comm",
+  "uu_cp",
+  "uu_csplit",
+@@ -2606,6 +2607,14 @@ dependencies = [
+  "uucore",
+ ]
+ 
++[[package]]
++name = "uu_cli"
++version = "0.0.27"
++dependencies = [
++ "clap",
++ "uucore",
++]
++
+ [[package]]
+ name = "uu_comm"
+ version = "0.0.27"
+diff --git a/Cargo.toml b/Cargo.toml
+index aca5d7d4b..91259599f 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -66,6 +66,7 @@ feat_common_core = [
+   "blockheight", ##gnostr
+   "cat",
+   "cksum",
++  "cli",
+   "comm",
+   "cp",
+   "csplit",
+@@ -398,6 +399,7 @@ chmod = { optional = true, version = "0.0.27", package = "uu_chmod", path = "src
+ chown = { optional = true, version = "0.0.27", package = "uu_chown", path = "src/uu/chown" }
+ chroot = { optional = true, version = "0.0.27", package = "uu_chroot", path = "src/uu/chroot" }
+ cksum = { optional = true, version = "0.0.27", package = "uu_cksum", path = "src/uu/cksum" }
++cli = { optional = true, version = "0.0.27", package = "uu_cli", path = "src/uu/cli" }
+ comm = { optional = true, version = "0.0.27", package = "uu_comm", path = "src/uu/comm" }
+ cp = { optional = true, version = "0.0.27", package = "uu_cp", path = "src/uu/cp" }
+ csplit = { optional = true, version = "0.0.27", package = "uu_csplit", path = "src/uu/csplit" }
+diff --git a/GNUmakefile b/GNUmakefile
+index 1514d72b6..c89dafc15 100644
+--- a/GNUmakefile
++++ b/GNUmakefile
+@@ -65,6 +65,7 @@ PROGS       := \
+ 	blockheight \
+ 	cat \
+ 	cksum \
++	cli \
+ 	comm \
+ 	cp \
+ 	csplit \
+@@ -197,6 +198,7 @@ TEST_PROGS  := \
+ 	chmod \
+ 	chown \
+ 	cksum \
++	cli \
+ 	comm \
+ 	cp \
+ 	csplit \
+diff --git a/src/uu/cli/Cargo.toml b/src/uu/cli/Cargo.toml
+new file mode 100644
+index 000000000..85c6cb2d2
+--- /dev/null
++++ b/src/uu/cli/Cargo.toml
+@@ -0,0 +1,25 @@
++[package]
++name = "uu_cli"
++version = "0.0.27"
++authors = ["uutils developers"]
++license = "MIT"
++description = "basename ~ (uutils) display PATHNAME with leading directory components removed"
++
++homepage = "https://github.com/uutils/coreutils"
++repository = "https://github.com/uutils/coreutils/tree/main/src/uu/basename"
++keywords = ["coreutils", "uutils", "cross-platform", "cli", "utility"]
++categories = ["command-line-utilities"]
++edition = "2021"
++
++readme.workspace = true
++
++[lib]
++path = "src/cli.rs"
++
++[dependencies]
++clap = { workspace = true }
++uucore = { workspace = true }
++
++[[bin]]
++name = "cli"
++path = "src/main.rs"
+diff --git a/src/uu/cli/LICENSE b/src/uu/cli/LICENSE
+new file mode 120000
+index 000000000..5853aaea5
+--- /dev/null
++++ b/src/uu/cli/LICENSE
+@@ -0,0 +1 @@
++../../../LICENSE
+\ No newline at end of file
+diff --git a/src/uu/cli/cli.md b/src/uu/cli/cli.md
+new file mode 100644
+index 000000000..18dda485a
+--- /dev/null
++++ b/src/uu/cli/cli.md
+@@ -0,0 +1,9 @@
++# cli
++
++```
++cli [-z] NAME [SUFFIX]
++cli OPTION... NAME...
++```
++
++Print NAME with any leading directory components removed
++If specified, also remove a trailing SUFFIX
+diff --git a/src/uu/cli/src/cli.rs b/src/uu/cli/src/cli.rs
+new file mode 100644
+index 000000000..dc57e92ba
+--- /dev/null
++++ b/src/uu/cli/src/cli.rs
+@@ -0,0 +1,140 @@
++// This file is part of the uutils coreutils package.
++//
++// For the full copyright and license information, please view the LICENSE
++// file that was distributed with this source code.
++
++// spell-checker:ignore (ToDO) fullname
++
++use clap::{crate_version, Arg, ArgAction, Command};
++use std::path::{is_separator, PathBuf};
++use uucore::display::Quotable;
++use uucore::error::{UResult, UUsageError};
++use uucore::line_ending::LineEnding;
++use uucore::{format_usage, help_about, help_usage};
++
++static ABOUT: &str = help_about!("cli.md");
++
++const USAGE: &str = help_usage!("cli.md");
++
++pub mod options {
++    pub static MULTIPLE: &str = "multiple";
++    pub static NAME: &str = "name";
++    pub static SUFFIX: &str = "suffix";
++    pub static ZERO: &str = "zero";
++}
++
++#[uucore::main]
++pub fn uumain(args: impl uucore::Args) -> UResult<()> {
++    let args = args.collect_lossy();
++
++    //
++    // Argument parsing
++    //
++    let matches = uu_app().try_get_matches_from(args)?;
++
++    let line_ending = LineEnding::from_zero_flag(matches.get_flag(options::ZERO));
++
++    let mut name_args = matches
++        .get_many::<String>(options::NAME)
++        .unwrap_or_default()
++        .collect::<Vec<_>>();
++    if name_args.is_empty() {
++        return Err(UUsageError::new(1, "missing operand".to_string()));
++    }
++    let multiple_paths =
++        matches.get_one::<String>(options::SUFFIX).is_some() || matches.get_flag(options::MULTIPLE);
++    let suffix = if multiple_paths {
++        matches
++            .get_one::<String>(options::SUFFIX)
++            .cloned()
++            .unwrap_or_default()
++    } else {
++        // "simple format"
++        match name_args.len() {
++            0 => panic!("already checked"),
++            1 => String::default(),
++            2 => name_args.pop().unwrap().clone(),
++            _ => {
++                return Err(UUsageError::new(
++                    1,
++                    format!("extra operand {}", name_args[2].quote(),),
++                ));
++            }
++        }
++    };
++
++    //
++    // Main Program Processing
++    //
++
++    for path in name_args {
++        print!("{}{}", cli(path, &suffix), line_ending);
++    }
++
++    Ok(())
++}
++
++pub fn uu_app() -> Command {
++    Command::new(uucore::util_name())
++        .version(crate_version!())
++        .about(ABOUT)
++        .override_usage(format_usage(USAGE))
++        .infer_long_args(true)
++        .arg(
++            Arg::new(options::MULTIPLE)
++                .short('a')
++                .long(options::MULTIPLE)
++                .help("support multiple arguments and treat each as a NAME")
++                .action(ArgAction::SetTrue)
++                .overrides_with(options::MULTIPLE),
++        )
++        .arg(
++            Arg::new(options::NAME)
++                .action(clap::ArgAction::Append)
++                .value_hint(clap::ValueHint::AnyPath)
++                .hide(true)
++                .trailing_var_arg(true),
++        )
++        .arg(
++            Arg::new(options::SUFFIX)
++                .short('s')
++                .long(options::SUFFIX)
++                .value_name("SUFFIX")
++                .help("remove a trailing SUFFIX; implies -a")
++                .overrides_with(options::SUFFIX),
++        )
++        .arg(
++            Arg::new(options::ZERO)
++                .short('z')
++                .long(options::ZERO)
++                .help("end each output line with NUL, not newline")
++                .action(ArgAction::SetTrue)
++                .overrides_with(options::ZERO),
++        )
++}
++
++fn cli(fullname: &str, suffix: &str) -> String {
++    // Remove all platform-specific path separators from the end.
++    let path = fullname.trim_end_matches(is_separator);
++
++    // If the path contained *only* suffix characters (for example, if
++    // `fullname` were "///" and `suffix` were "/"), then `path` would
++    // be left with the empty string. In that case, we set `path` to be
++    // the original `fullname` to avoid returning the empty path.
++    let path = if path.is_empty() { fullname } else { path };
++
++    // Convert to path buffer and get last path component
++    let pb = PathBuf::from(path);
++    match pb.components().last() {
++        Some(c) => {
++            let name = c.as_os_str().to_str().unwrap();
++            if name == suffix {
++                name.to_string()
++            } else {
++                name.strip_suffix(suffix).unwrap_or(name).to_string()
++            }
++        }
++
++        None => String::new(),
++    }
++}
+diff --git a/src/uu/cli/src/main.rs b/src/uu/cli/src/main.rs
+new file mode 100644
+index 000000000..c7719274a
+--- /dev/null
++++ b/src/uu/cli/src/main.rs
+@@ -0,0 +1 @@
++uucore::bin!(uu_cli);
+diff --git a/tests/by-util/test_cli.rs b/tests/by-util/test_cli.rs
+new file mode 100755
+index 000000000..23e4a2eb4
+--- /dev/null
++++ b/tests/by-util/test_cli.rs
+@@ -0,0 +1,267 @@
++// This file is part of the uutils coreutils package.
++//
++// For the full copyright and license information, please view the LICENSE
++// file that was distributed with this source code.
++// spell-checker:ignore (words) reallylongexecutable
++
++use crate::common::util::TestScenario;
++#[cfg(any(unix, target_os = "redox"))]
++use std::ffi::OsStr;
++
++#[test]
++fn test_help() {
++    for help_flg in ["-h", "--help"] {
++        new_ucmd!()
++            .arg(help_flg)
++            .succeeds()
++            .no_stderr()
++            .stdout_contains("Usage:");
++    }
++}
++
++#[test]
++fn test_version() {
++    for version_flg in ["-V", "--version"] {
++        assert!(new_ucmd!()
++            .arg(version_flg)
++            .succeeds()
++            .no_stderr()
++            .stdout_str()
++            .starts_with("basename"));
++    }
++}
++
++#[test]
++fn test_directory() {
++    new_ucmd!()
++        .args(&["/root/alpha/beta/gamma/delta/epsilon/omega/"])
++        .succeeds()
++        .stdout_only("omega\n");
++}
++
++#[test]
++fn test_file() {
++    new_ucmd!()
++        .args(&["/etc/passwd"])
++        .succeeds()
++        .stdout_only("passwd\n");
++}
++
++#[test]
++fn test_remove_suffix() {
++    new_ucmd!()
++        .args(&["/usr/local/bin/reallylongexecutable.exe", ".exe"])
++        .succeeds()
++        .stdout_only("reallylongexecutable\n");
++}
++
++#[test]
++fn test_do_not_remove_suffix() {
++    new_ucmd!()
++        .args(&["/foo/bar/baz", "baz"])
++        .succeeds()
++        .stdout_only("baz\n");
++}
++
++#[test]
++fn test_multiple_param() {
++    for multiple_param in ["-a", "--multiple", "--mul"] {
++        let path = "/foo/bar/baz";
++        new_ucmd!()
++            .args(&[multiple_param, path, path])
++            .succeeds()
++            .stdout_only("baz\nbaz\n");
++    }
++}
++
++#[test]
++fn test_suffix_param() {
++    for suffix_param in ["-s", "--suffix", "--suf"] {
++        let path = "/foo/bar/baz.exe";
++        new_ucmd!()
++            .args(&[suffix_param, ".exe", path, path])
++            .succeeds()
++            .stdout_only("baz\nbaz\n");
++    }
++}
++
++#[test]
++fn test_zero_param() {
++    for zero_param in ["-z", "--zero", "--ze"] {
++        let path = "/foo/bar/baz";
++        new_ucmd!()
++            .args(&[zero_param, "-a", path, path])
++            .succeeds()
++            .stdout_only("baz\0baz\0");
++    }
++}
++
++fn expect_error(input: &[&str]) {
++    assert!(!new_ucmd!()
++        .args(input)
++        .fails()
++        .no_stdout()
++        .stderr_str()
++        .is_empty());
++}
++
++#[test]
++fn test_invalid_option() {
++    let path = "/foo/bar/baz";
++    expect_error(&["-q", path]);
++}
++
++#[test]
++fn test_no_args() {
++    expect_error(&[]);
++}
++
++#[test]
++fn test_no_args_output() {
++    new_ucmd!().fails().usage_error("missing operand");
++}
++
++#[test]
++fn test_too_many_args() {
++    expect_error(&["a", "b", "c"]);
++}
++
++#[test]
++fn test_too_many_args_output() {
++    new_ucmd!()
++        .args(&["a", "b", "c"])
++        .fails()
++        .usage_error("extra operand 'c'");
++}
++
++#[cfg(any(unix, target_os = "redox"))]
++fn test_invalid_utf8_args(os_str: &OsStr) {
++    let test_vec = vec![os_str.to_os_string()];
++    new_ucmd!().args(&test_vec).succeeds().stdout_is("fo�o\n");
++}
++
++#[cfg(any(unix, target_os = "redox"))]
++#[test]
++fn invalid_utf8_args_unix() {
++    use std::os::unix::ffi::OsStrExt;
++
++    let source = [0x66, 0x6f, 0x80, 0x6f];
++    let os_str = OsStr::from_bytes(&source[..]);
++    test_invalid_utf8_args(os_str);
++}
++
++#[test]
++fn test_root() {
++    let expected = if cfg!(windows) { "\\\n" } else { "/\n" };
++    new_ucmd!().arg("/").succeeds().stdout_is(expected);
++}
++
++#[test]
++fn test_double_slash() {
++    // TODO The GNU tests seem to suggest that some systems treat "//"
++    // as the same directory as "/" directory but not all systems. We
++    // should extend this test to account for that possibility.
++    let expected = if cfg!(windows) { "\\\n" } else { "/\n" };
++    new_ucmd!().arg("//").succeeds().stdout_is(expected);
++    new_ucmd!()
++        .args(&["//", "/"])
++        .succeeds()
++        .stdout_is(expected);
++    new_ucmd!()
++        .args(&["//", "//"])
++        .succeeds()
++        .stdout_is(expected);
++}
++
++#[test]
++fn test_triple_slash() {
++    let expected = if cfg!(windows) { "\\\n" } else { "/\n" };
++    new_ucmd!().arg("///").succeeds().stdout_is(expected);
++}
++
++#[test]
++fn test_simple_format() {
++    new_ucmd!().args(&["a-a", "-a"]).succeeds().stdout_is("a\n");
++    new_ucmd!()
++        .args(&["a--help", "--help"])
++        .succeeds()
++        .stdout_is("a\n");
++    new_ucmd!().args(&["a-h", "-h"]).succeeds().stdout_is("a\n");
++    new_ucmd!().args(&["f.s", ".s"]).succeeds().stdout_is("f\n");
++    new_ucmd!().args(&["a-s", "-s"]).succeeds().stdout_is("a\n");
++    new_ucmd!().args(&["a-z", "-z"]).succeeds().stdout_is("a\n");
++    new_ucmd!()
++        .args(&["a", "b", "c"])
++        .fails()
++        .code_is(1)
++        .stderr_contains("extra operand 'c'");
++}
++
++#[test]
++fn test_invalid_arg() {
++    new_ucmd!().arg("--definitely-invalid").fails().code_is(1);
++}
++
++#[test]
++fn test_repeated_multiple() {
++    new_ucmd!()
++        .args(&["-aa", "-a", "foo"])
++        .succeeds()
++        .stdout_is("foo\n");
++}
++
++#[test]
++fn test_repeated_multiple_many() {
++    new_ucmd!()
++        .args(&["-aa", "-a", "1/foo", "q/bar", "x/y/baz"])
++        .succeeds()
++        .stdout_is("foo\nbar\nbaz\n");
++}
++
++#[test]
++fn test_repeated_suffix_last() {
++    new_ucmd!()
++        .args(&["-s", ".h", "-s", ".c", "foo.c"])
++        .succeeds()
++        .stdout_is("foo\n");
++}
++
++#[test]
++fn test_repeated_suffix_not_first() {
++    new_ucmd!()
++        .args(&["-s", ".h", "-s", ".c", "foo.h"])
++        .succeeds()
++        .stdout_is("foo.h\n");
++}
++
++#[test]
++fn test_repeated_suffix_multiple() {
++    new_ucmd!()
++        .args(&["-as", ".h", "-a", "-s", ".c", "foo.c", "bar.c", "bar.h"])
++        .succeeds()
++        .stdout_is("foo\nbar\nbar.h\n");
++}
++
++#[test]
++fn test_repeated_zero() {
++    new_ucmd!()
++        .args(&["-zz", "-z", "foo/bar"])
++        .succeeds()
++        .stdout_is("bar\0");
++}
++
++#[test]
++fn test_zero_does_not_imply_multiple() {
++    new_ucmd!()
++        .args(&["-z", "foo.c", "c"])
++        .succeeds()
++        .stdout_is("foo.\0");
++}
++
++#[test]
++fn test_suffix_implies_multiple() {
++    new_ucmd!()
++        .args(&["-s", ".c", "foo.c", "o.c"])
++        .succeeds()
++        .stdout_is("foo\no\n");
++}
+diff --git a/util/show-utils.BAT b/util/show-utils.BAT
+index e8f4c73ba..fc5116c19 100644
+--- a/util/show-utils.BAT
++++ b/util/show-utils.BAT
+@@ -12,7 +12,7 @@ set "ME_parent_dir=%~dp0.\.."
+ @rem refs: <https://forge.rust-lang.org/release/platform-support.html> , <https://docs.rs/platforms/0.2.1/platforms/platform/tier1/index.html>
+ 
+ @rem :: default ("Tier 1" cross-platform) utility list
+-set "default_utils=base32 base64 basename bech32 cat cksum comm cp cut date dircolors dirname echo env expand expr factor false fmt fold git hashsum head join keypair link ln ls mkdir mktemp more mv nl od paste post post_event printenv printf ptx pwd readlink realpath rm rmdir seq shred shuf sleep sort split sum tac tail tee template test tr true truncate tsort unexpand uniq wc weeble wobble xq yes"
++set "default_utils=base32 base64 basename bech32 cat cksum cli comm cp cut date dircolors dirname echo env expand expr factor false fmt fold git hashsum head join keypair link ln ls mkdir mktemp more mv nl od paste post post_event printenv printf ptx pwd readlink realpath rm rmdir seq shred shuf sleep sort split sum tac tail tee template test tr true truncate tsort unexpand uniq wc weeble wobble xq yes"
+ 
+ set "project_dir=%ME_parent_dir%"
+ cd "%project_dir%"
+diff --git a/util/show-utils.sh b/util/show-utils.sh
+index 78952cf25..da9e8ec74 100755
+--- a/util/show-utils.sh
++++ b/util/show-utils.sh
+@@ -22,7 +22,7 @@ ME_parent_dir_abs="$("${REALPATH}" -mP -- "${ME_parent_dir}" || "${REALPATH}" --
+ # refs: <https://forge.rust-lang.org/release/platform-support.html> , <https://docs.rs/platforms/0.2.1/platforms/platform/tier1/index.html>
+ 
+ # default ("Tier 1" cross-platform) utility list
+-default_utils="base32 base64 basename bech32 cat cksum comm cp cut date dircolors dirname echo env expand
++default_utils="base32 base64 basename bech32 cat cksum cli comm cp cut date dircolors dirname echo env expand
+ expr factor false fmt fold git hashsum head join keypair link ln ls mkdir mktemp more mv nl od paste post post_event printenv
+ printf ptx pwd readlink realpath rm rmdir seq shred shuf sleep sort split sum tac tail tee template
+ test tr true truncate tsort unexpand uniq wc weeble wobble xq yes"

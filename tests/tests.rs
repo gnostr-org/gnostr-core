@@ -25,6 +25,10 @@ mod test_basename;
 #[path = "by-util/test_basenc.rs"]
 mod test_basenc;
 
+#[cfg(feature = "bech32")]
+#[path = "by-util/test_bech32.rs"]
+mod test_bech32;
+
 #[cfg(feature = "cat")]
 #[path = "by-util/test_cat.rs"]
 mod test_cat;
@@ -240,6 +244,14 @@ mod test_pathchk;
 #[cfg(feature = "pinky")]
 #[path = "by-util/test_pinky.rs"]
 mod test_pinky;
+
+#[cfg(feature = "post")]
+#[path = "by-util/test_post.rs"]
+mod test_post;
+
+#[cfg(feature = "post_event")]
+#[path = "by-util/test_post_event.rs"]
+mod test_post_event;
 
 #[cfg(feature = "pr")]
 #[path = "by-util/test_pr.rs"]
