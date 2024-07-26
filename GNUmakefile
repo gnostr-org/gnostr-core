@@ -315,8 +315,9 @@ use_default := 1
 
 build-pkgs:
 ifneq (${MULTICALL}, y)
-	${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst -,_,$(pkg)))
-	#${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst _,-,$(pkg)))
+	${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst _,_,$(pkg)))
+	##${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst _,-,$(pkg)))
+	##${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst -,_,$(pkg)))
 endif
 
 build-coreutils:
