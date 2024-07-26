@@ -396,11 +396,12 @@ ifeq (${MULTICALL}, y)
 	$(INSTALL) $(BUILDDIR)/gnostr-rs $(INSTALLDIR_BIN)/$(PROG_PREFIX)gnostr-rs
 	$(INSTALL) $(BUILDDIR)/git-gnostr $(INSTALLDIR_BIN)/$(PROG_PREFIX)git-gnostr
 	cd $(INSTALLDIR_BIN) && $(foreach prog, $(filter-out coreutils, $(INSTALLEES)), \
-		ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(prog) &&) :
+		ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(subst _,-,$(prog)) &&) :
 	$(if $(findstring test,$(INSTALLEES)), cd $(INSTALLDIR_BIN) && ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)[)
 else
 	$(foreach prog, $(INSTALLEES), \
-		$(INSTALL) $(BUILDDIR)/$(prog) $(INSTALLDIR_BIN)/$(PROG_PREFIX)$(prog);)
+		$(INSTALL) $(BUILDDIR)/$(prog) $(INSTALLDIR_BIN)/$(PROG_PREFIX)$(subst -,_,$(prog));)
+	#	$(INSTALL) $(BUILDDIR)/$(prog) $(INSTALLDIR_BIN)/$(PROG_PREFIX)$(subst _,-,$(prog));)
 	$(if $(findstring test,$(INSTALLEES)), $(INSTALL) $(BUILDDIR)/test $(INSTALLDIR_BIN)/$(PROG_PREFIX)[)
 endif
 	$(SUDO) mkdir -p $(DESTDIR)$(DATAROOTDIR)/man/man1
