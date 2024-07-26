@@ -403,14 +403,14 @@ else
 		$(INSTALL) $(BUILDDIR)/$(prog) $(INSTALLDIR_BIN)/$(PROG_PREFIX)$(prog);)
 	$(if $(findstring test,$(INSTALLEES)), $(INSTALL) $(BUILDDIR)/test $(INSTALLDIR_BIN)/$(PROG_PREFIX)[)
 endif
-	mkdir -p $(DESTDIR)$(DATAROOTDIR)/man/man1
+	$(SUDO) mkdir -p $(DESTDIR)$(DATAROOTDIR)/man/man1
 	$(foreach prog, $(INSTALLEES), \
 		$(INSTALL) $(BUILDDIR)/man/$(PROG_PREFIX)$(prog).1 $(DESTDIR)$(DATAROOTDIR)/man/man1/; \
 	)
 
-	mkdir -p $(DESTDIR)$(DATAROOTDIR)/zsh/site-functions
-	mkdir -p $(DESTDIR)$(DATAROOTDIR)/bash-completion/completions
-	mkdir -p $(DESTDIR)$(DATAROOTDIR)/fish/vendor_completions.d
+	$(SUDO) mkdir -p $(DESTDIR)$(DATAROOTDIR)/zsh/site-functions
+	$(SUDO) mkdir -p $(DESTDIR)$(DATAROOTDIR)/bash-completion/completions
+	$(SUDO) mkdir -p $(DESTDIR)$(DATAROOTDIR)/fish/vendor_completions.d
 	$(foreach prog, $(INSTALLEES), \
 		$(INSTALL) $(BUILDDIR)/completions/zsh/_$(PROG_PREFIX)$(prog) $(DESTDIR)$(DATAROOTDIR)/zsh/site-functions/; \
 		$(INSTALL) $(BUILDDIR)/completions/bash/$(PROG_PREFIX)$(prog) $(DESTDIR)$(DATAROOTDIR)/bash-completion/completions/; \
