@@ -2,7 +2,8 @@
 
 # Config options
 PROFILE         ?= debug
-MULTICALL       ?= n
+##gnostr default is MULTICALL
+MULTICALL       ?= y
 INSTALL         ?= install
 ifneq (,$(filter install, $(MAKECMDGOALS)))
 override PROFILE:=release
