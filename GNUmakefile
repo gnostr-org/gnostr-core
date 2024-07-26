@@ -409,8 +409,8 @@ install: build manpages completions
 	echo $(INSTALLEES)
 ifeq (${MULTICALL}, y)
 	$(INSTALL) $(BUILDDIR)/coreutils $(INSTALLDIR_BIN)/$(PROG_PREFIX)coreutils
-	$(INSTALL) $(BUILDDIR)/gnostr-rs $(INSTALLDIR_BIN)/$(PROG_PREFIX)gnostr-rs
-	$(INSTALL) $(BUILDDIR)/git-gnostr $(INSTALLDIR_BIN)/$(PROG_PREFIX)git-gnostr
+	$(INSTALL) $(BUILDDIR)/gnostr-rs $(INSTALLDIR_BIN)/gnostr-rs
+	$(INSTALL) $(BUILDDIR)/git-gnostr $(INSTALLDIR_BIN)/git-gnostr
 	cd $(INSTALLDIR_BIN) && $(foreach prog, $(filter-out coreutils, $(INSTALLEES)), \
 		ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(prog) &&) :
 	#	ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(subst _,-,$(prog)) &&) :
