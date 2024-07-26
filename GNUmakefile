@@ -57,6 +57,9 @@ ifeq ($(SELINUX_ENABLED),)
 endif
 
 # Possible programs
+# the function definition may have undescores
+# while the resulting executable should have dashes
+# so PROGS list has dashes
 PROGS       := \
 	base32 \
 	base64 \
