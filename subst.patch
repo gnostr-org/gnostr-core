@@ -1,0 +1,92 @@
+diff --git a/GNUmakefile b/GNUmakefile
+index 8b2ef897c..e9fc707ed 100644
+--- a/GNUmakefile
++++ b/GNUmakefile
+@@ -77,7 +77,7 @@ PROGS       := \
+ 	dircolors \
+ 	dirname \
+ 	echo \
+-	encrypt_privkey \
++	encrypt-privkey \
+ 	env \
+ 	expand \
+ 	expr \
+@@ -85,7 +85,7 @@ PROGS       := \
+ 	false \
+ 	fmt \
+ 	fold \
+-	get_relays \
++	get-relays \
+ 	git \
+ 	hashsum \
+ 	head \
+@@ -106,13 +106,13 @@ PROGS       := \
+ 	od \
+ 	paste \
+ 	post \
+-	post_event \
++	post-event \
+ 	pr \
+ 	printenv \
+ 	printf \
+-	privkey_to_bech32 \
++	privkey-to-bech32 \
+ 	ptx \
+-	pubkey_to_bech32 \
++	pubkey-to-bech32 \
+ 	pwd \
+ 	readlink \
+ 	realpath \
+@@ -215,13 +215,13 @@ TEST_PROGS  := \
+ 	dircolors \
+ 	dirname \
+ 	echo \
+-	encrypt_privkey \
++	encrypt-privkey \
+ 	env \
+ 	expr \
+ 	factor \
+ 	false \
+ 	fold \
+-	get_relays \
++	get-relays \
+ 	git \
+ 	hashsum \
+ 	head \
+@@ -243,9 +243,9 @@ TEST_PROGS  := \
+ 	pinky \
+ 	pr \
+ 	printf \
+-	privkey_to_bech32 \
++	privkey-to-bech32 \
+ 	ptx \
+-	pubkey_to_bech32 \
++	pubkey-to-bech32 \
+ 	pwd \
+ 	readlink \
+ 	realpath \
+@@ -297,7 +297,7 @@ endef
+ 
+ # Output names
+ EXES        := \
+-	$(sort $(filter $(UTILS),$(filter-out $(SKIP_UTILS),$(PROGS))))
++	$(sort $(filter $(UTILS),$(filter-out $(SKIP_UTILS),$(subst -,_,$(PROGS)))))
+ 
+ INSTALLEES  := ${EXES}
+ ifeq (${MULTICALL}, y)
+@@ -312,6 +312,7 @@ use_default := 1
+ build-pkgs:
+ ifneq (${MULTICALL}, y)
+ 	${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst -,_,$(pkg)))
++	#${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst _,-,$(pkg)))
+ endif
+ 
+ build-coreutils:
+@@ -397,6 +398,7 @@ ifeq (${MULTICALL}, y)
+ 	$(INSTALL) $(BUILDDIR)/git-gnostr $(INSTALLDIR_BIN)/$(PROG_PREFIX)git-gnostr
+ 	cd $(INSTALLDIR_BIN) && $(foreach prog, $(filter-out coreutils, $(INSTALLEES)), \
+ 		ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(subst _,-,$(prog)) &&) :
++	#	ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(subst -,_,$(prog)) &&) :
+ 	$(if $(findstring test,$(INSTALLEES)), cd $(INSTALLDIR_BIN) && ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)[)
+ else
+ 	$(foreach prog, $(INSTALLEES), \
