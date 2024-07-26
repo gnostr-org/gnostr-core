@@ -18,7 +18,10 @@ path = "src/encrypt_privkey.rs"
 
 [dependencies]
 clap = { workspace = true }
+gnostr-types = "0.7.1-unstable"
+rpassword = "7.2"
 uucore = { workspace = true }
+zeroize = "1.8.1"
 
 [[bin]]
 name = "encrypt-privkey"
