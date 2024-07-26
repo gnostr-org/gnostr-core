@@ -82,6 +82,7 @@ PROGS       := \
 	dirname \
 	echo \
 	encrypt-privkey \
+	encrypt_privkey \
 	env \
 	expand \
 	expr \
@@ -90,6 +91,7 @@ PROGS       := \
 	fmt \
 	fold \
 	get-relays \
+	get_relays \
 	git \
 	hashsum \
 	head \
@@ -111,12 +113,15 @@ PROGS       := \
 	paste \
 	post \
 	post-event \
+	post_event \
 	pr \
 	printenv \
 	printf \
 	privkey-to-bech32 \
+	privkey_to_bech32 \
 	ptx \
 	pubkey-to-bech32 \
+	pubkey_to_bech32 \
 	pwd \
 	readlink \
 	realpath \
@@ -300,6 +305,8 @@ test_busybox_$(1):
 endef
 
 # Output names
+## we subst dashes for underscores in the PROGS list here
+## REF: PROGS and build: build-pkgs build-coreutils
 EXES        := \
 	$(sort $(filter $(UTILS),$(filter-out $(SKIP_UTILS),$(subst -,_,$(PROGS)))))
 
@@ -314,8 +321,9 @@ do_install = $(INSTALL) ${1}
 use_default := 1
 
 build-pkgs:
+	echo $(EXES)
 ifneq (${MULTICALL}, y)
-	${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst _,_,$(pkg)))
+	${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst -,_,$(pkg)))
 	##${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst _,-,$(pkg)))
 	##${CARGO} build ${CARGOFLAGS} ${PROFILE_CMD} $(foreach pkg,$(EXES),-p uu_$(subst -,_,$(pkg)))
 endif
@@ -397,12 +405,15 @@ completions: build-coreutils
 
 install: build manpages completions
 	mkdir -p $(INSTALLDIR_BIN)
+	echo $(EXES)
+	echo $(INSTALLEES)
 ifeq (${MULTICALL}, y)
 	$(INSTALL) $(BUILDDIR)/coreutils $(INSTALLDIR_BIN)/$(PROG_PREFIX)coreutils
 	$(INSTALL) $(BUILDDIR)/gnostr-rs $(INSTALLDIR_BIN)/$(PROG_PREFIX)gnostr-rs
 	$(INSTALL) $(BUILDDIR)/git-gnostr $(INSTALLDIR_BIN)/$(PROG_PREFIX)git-gnostr
 	cd $(INSTALLDIR_BIN) && $(foreach prog, $(filter-out coreutils, $(INSTALLEES)), \
-		ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(subst _,-,$(prog)) &&) :
+		ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(prog) &&) :
+	#	ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(subst _,-,$(prog)) &&) :
 	#	ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(subst -,_,$(prog)) &&) :
 	$(if $(findstring test,$(INSTALLEES)), cd $(INSTALLDIR_BIN) && ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)[)
 else
