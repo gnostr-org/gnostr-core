@@ -387,7 +387,7 @@ distclean: clean
 	$(CARGO) clean $(CARGOFLAGS) && $(CARGO) update $(CARGOFLAGS)
 
 manpages: build-coreutils
-	mkdir -p $(BUILDDIR)/man/
+	$(SUDO) mkdir -p $(BUILDDIR)/man/
 	$(foreach prog, $(INSTALLEES), \
 		$(BUILDDIR)/coreutils manpage $(prog) > $(BUILDDIR)/man/$(PROG_PREFIX)$(prog).1; \
 	)
