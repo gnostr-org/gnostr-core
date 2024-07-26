@@ -403,6 +403,9 @@ completions: build-coreutils
 		$(BUILDDIR)/coreutils completion $(prog) fish > $(BUILDDIR)/completions/fish/$(PROG_PREFIX)$(prog).fish; \
 	)
 
+install-test: #$(shell 2>/dev/null)
+	$(MAKE) install && git gnostr weeble && echo && git-gnostr blockheight && echo && gnostr-rs wobble && man gnostr-weeble
+
 install: build manpages completions
 	mkdir -p $(INSTALLDIR_BIN)
 	echo $(EXES)
