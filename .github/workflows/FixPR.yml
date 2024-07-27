@@ -5,14 +5,14 @@ name: FixPR
 # Trigger automated fixes for PRs being merged (with associated commits)
 
 env:
-  BRANCH_TARGET: main
+  BRANCH_TARGET: m**
 
 on:
   # * only trigger on pull request closed to specific branches
   # ref: https://github.community/t/trigger-workflow-only-on-pull-request-merge/17359/9
   pull_request:
     branches:
-      - main # == env.BRANCH_TARGET ## unfortunately, env context variables are only available in jobs/steps (see <https://github.community/t/how-to-use-env-context/16975/2>)
+      - m** # == env.BRANCH_TARGET ## unfortunately, env context variables are only available in jobs/steps (see <https://github.community/t/how-to-use-env-context/16975/2>)
     types: [ closed ]
 
 jobs:
