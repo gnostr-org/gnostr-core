@@ -30,46 +30,52 @@ pub fn uumain(args: impl uucore::Args) -> UResult<()> {
     //
     // Argument parsing
     //
-    let matches = uu_app().try_get_matches_from(args)?;
+    //let matches = uu_app().try_get_matches_from(args)?;
 
-    let line_ending = LineEnding::from_zero_flag(matches.get_flag(options::ZERO));
+    //let line_ending = LineEnding::from_zero_flag(matches.get_flag(options::ZERO));
 
-    let mut name_args = matches
-        .get_many::<String>(options::NAME)
-        .unwrap_or_default()
-        .collect::<Vec<_>>();
-    if name_args.is_empty() {
-        return Err(UUsageError::new(1, "missing operand".to_string()));
-    }
-    let multiple_paths =
-        matches.get_one::<String>(options::SUFFIX).is_some() || matches.get_flag(options::MULTIPLE);
-    let suffix = if multiple_paths {
-        matches
-            .get_one::<String>(options::SUFFIX)
-            .cloned()
-            .unwrap_or_default()
-    } else {
-        // "simple format"
-        match name_args.len() {
-            0 => panic!("already checked"),
-            1 => String::default(),
-            2 => name_args.pop().unwrap().clone(),
-            _ => {
-                return Err(UUsageError::new(
-                    1,
-                    format!("extra operand {}", name_args[2].quote(),),
-                ));
-            }
-        }
-    };
+    ////let mut name_args = matches
+    //  //  .get_one::<String>(options::NAME)
+    //    //.unwrap();
+    //    //.collect::<Vec<_>>();
+    //let mut name_args: std::string::String = matches
+    //    .get_one::<String>(options::NAME).expect("REASON")
+    //    .to_string();
+    // if name_args.is_empty() {
+    //     //return Err(UUsageError::new(1, "missing operand".to_string()));
+    // }
+    //let multiple_paths =
+    //    matches.get_one::<String>(options::SUFFIX).is_some() || matches.get_flag(options::MULTIPLE);
+    //let suffix = if multiple_paths {
+    //    matches
+    //        .get_one::<String>(options::SUFFIX)
+    //        .cloned()
+    //        .unwrap_or_default()
+    // } else {
+    //     // "simple format"
+    //    match name_args.len() {
+    //        //0 => panic!("already checked"),
+    //        //1 => String::default(),
+    //        1 => name_args.pop().unwrap().to_string(),
+    //        _ => {
+    //            return Err(UUsageError::new(
+    //                1,
+    //                format!("extra operand {}", name_args.quote(),),
+    //            ));
+    //        }
+    //    }
+    //};
 
     //
     // Main Program Processing
     //
-
-    for path in name_args {
-        print!("{}{}", encrypt_privkey(path, &suffix), line_ending);
-    }
+ 
+    let name_args =  String::from("");
+    let suffix =  String::from("");
+    let line_ending: bool = false;
+    //for path in name_args {
+        print!("\n{}\n{}\n", encrypt_privkey(&name_args, &suffix), line_ending);
+   // }
 
     Ok(())
 }
@@ -113,28 +119,70 @@ pub fn uu_app() -> Command {
         )
 }
 
+
+
+
+// TEMPORARILY
+#[allow(clippy::uninlined_format_args)]
+
+use gnostr_types::PrivateKey;
+use zeroize::Zeroize;
+
+// Turn a hex private key into an encrypted private key
 fn encrypt_privkey(fullname: &str, suffix: &str) -> String {
-    // Remove all platform-specific path separators from the end.
-    let path = fullname.trim_end_matches(is_separator);
+    // if cfg!(debug_assertions) {
+    //     println!("WARNING: This takes a long time in debug mode.");
+    // }
 
-    // If the path contained *only* suffix characters (for example, if
-    // `fullname` were "///" and `suffix` were "/"), then `path` would
-    // be left with the empty string. In that case, we set `path` to be
-    // the original `fullname` to avoid returning the empty path.
-    let path = if path.is_empty() { fullname } else { path };
+    // // Remove all platform-specific path separators from the end.
+    // let path = fullname.trim_end_matches(is_separator);
 
-    // Convert to path buffer and get last path component
-    let pb = PathBuf::from(path);
-    match pb.components().last() {
-        Some(c) => {
-            let name = c.as_os_str().to_str().unwrap();
-            if name == suffix {
-                name.to_string()
-            } else {
-                name.strip_suffix(suffix).unwrap_or(name).to_string()
-            }
-        }
+    // // If the path contained *only* suffix characters (for example, if
+    // // `fullname` were "///" and `suffix` were "/"), then `path` would
+    // // be left with the empty string. In that case, we set `path` to be
+    // // the original `fullname` to avoid returning the empty path.
+    // let path = if path.is_empty() { fullname } else { path };
 
-        None => String::new(),
-    }
+    // // Convert to path buffer and get last path component
+    // let pb = PathBuf::from(path);
+    // match pb.components().last() {
+    //     Some(c) => {
+    //         let name = c.as_os_str().to_str().unwrap();
+    //         if name == suffix {
+    //             //name.to_string()
+    //             return name.to_string();
+    //         } else {
+    //             //name.strip_suffix(suffix).unwrap_or(name).to_string()
+    //             return name.strip_suffix(suffix).unwrap_or(name).to_string();
+    //         }
+    //     }
+
+    //     None => String::new(),
+    // };
+
+    let private_key_str = rpassword::prompt_password("Private Key (hex or bech32): ").unwrap();
+
+    let private_key = match PrivateKey::try_from_hex_string(&private_key_str) {
+        Ok(pk) => pk,
+        Err(_) => match PrivateKey::try_from_bech32_string(&private_key_str) {
+            Ok(pk) => pk,
+            Err(_) => panic!("Did not recognize private key"),
+        },
+    };
+
+    println!("Enter the logN rounds (a power of 2, e.g. 20): ");
+    let mut log_n = String::from("0");
+    let stdin = std::io::stdin();
+    stdin.read_line(&mut log_n).unwrap();
+    log_n = log_n.trim().to_string();
+    let log_n = log_n.parse::<u8>().unwrap();
+
+    let mut password = rpassword::prompt_password("Password: ").unwrap();
+
+    let encrypted_private_key = private_key
+        .export_encrypted(&password, log_n)
+        .expect("Could not export encrypted private key");
+    //print!("{}", encrypted_private_key);
+    password.zeroize();
+    encrypted_private_key.to_string()
 }
