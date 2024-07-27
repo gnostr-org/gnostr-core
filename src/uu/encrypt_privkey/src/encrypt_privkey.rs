@@ -86,10 +86,20 @@ fn encrypt_privkey(_fullname: &str, _suffix: &str) -> String {
         },
     };
 
-    println!("Enter the logN rounds (a power of 2, default 0): ");
-    let mut log_n = String::from("0");
-    let stdin = std::io::stdin();
-    stdin.read_line(&mut log_n).unwrap();
+    //println!("Enter the logN rounds (a power of 2, default 0): ");
+    let mut log_n = rpassword::prompt_password("Enter the logN rounds (a power of 2, default 0): ").unwrap();
+    //let mut log_n = String::from("0");
+    //let stdin = std::io::stdin();
+    //stdin.read_line(&mut log_n).unwrap();
+    if log_n.len() == 0 {
+
+    print!("log_n={:}", log_n);
+    log_n = String::from("0");
+    print!("log_n={:}", log_n);
+
+
+    }
+
     log_n = log_n.trim().to_string();
     let log_n = log_n.parse::<u8>().unwrap();
 
