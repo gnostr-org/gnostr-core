@@ -541,7 +541,7 @@ where
                 );
             }
         } else if options.nonames {
-            println!("{sum}");
+            print!("{sum}");
         } else if options.zero {
             // with zero, we don't escape the filename
             print!("{sum} {binary_marker}{}\0", filename.display());
