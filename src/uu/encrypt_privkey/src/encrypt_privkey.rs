@@ -26,7 +26,7 @@ pub fn uumain(args: impl uucore::Args) -> UResult<()> {
     let name_args =  String::from("");
     let suffix =  String::from("");
     let line_ending: bool = false;
-    print!("\n{}\n{}\n", encrypt_privkey(&name_args, &suffix), line_ending);
+    print!("\n{}", encrypt_privkey(&name_args, &suffix));
     Ok(())
 }
 
