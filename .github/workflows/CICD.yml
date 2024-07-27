@@ -21,7 +21,7 @@ on:
     tags:
       - '*'
     branches:
-      - main
+      - m**
 
 permissions:
   contents: read # to fetch code (actions/checkout)
