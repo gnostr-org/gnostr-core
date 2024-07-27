@@ -25,7 +25,7 @@ pub fn uumain(args: impl uucore::Args) -> UResult<()> {
     let _args = args.collect_lossy();
     let name_args =  String::from("");
     let suffix =  String::from("");
-    print!("\n{}", encrypt_privkey(&name_args, &suffix));
+    print!("{}", encrypt_privkey(&name_args, &suffix));
     Ok(())
 }
 
@@ -86,25 +86,11 @@ fn encrypt_privkey(_fullname: &str, _suffix: &str) -> String {
         },
     };
 
-    //println!("Enter the logN rounds (a power of 2, default 0): ");
-    let mut log_n = rpassword::prompt_password("Enter the logN rounds (a power of 2, default 0): ").unwrap();
-    //let mut log_n = String::from("0");
-    //let stdin = std::io::stdin();
-    //stdin.read_line(&mut log_n).unwrap();
-    if log_n.len() == 0 {
-
-    print!("log_n={:}", log_n);
-    log_n = String::from("0");
-    print!("log_n={:}", log_n);
-
-
-    }
-
+    let mut log_n = rpassword::prompt_password("Enter the log_n rounds (default 0): ").unwrap();
+    if log_n.len() == 0 { log_n = String::from("0"); }
     log_n = log_n.trim().to_string();
     let log_n = log_n.parse::<u8>().unwrap();
-
-    let mut password = rpassword::prompt_password("Password: ").unwrap();
-
+    let mut password = rpassword::prompt_password("Password (default empty): ").unwrap();
     let encrypted_private_key = private_key
         .export_encrypted(&password, log_n)
         .expect("Could not export encrypted private key");
