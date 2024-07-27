@@ -25,7 +25,6 @@ pub fn uumain(args: impl uucore::Args) -> UResult<()> {
     let _args = args.collect_lossy();
     let name_args =  String::from("");
     let suffix =  String::from("");
-    let line_ending: bool = false;
     print!("\n{}", encrypt_privkey(&name_args, &suffix));
     Ok(())
 }
@@ -72,6 +71,7 @@ pub fn uu_app() -> Command {
 
 use gnostr_types::PrivateKey;
 use zeroize::Zeroize;
+mod rpassword;
 
 // Turn a hex private key into an encrypted private key
 fn encrypt_privkey(_fullname: &str, _suffix: &str) -> String {
