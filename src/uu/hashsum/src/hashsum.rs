@@ -546,7 +546,7 @@ where
             // with zero, we don't escape the filename
             print!("{sum} {binary_marker}{}\0", filename.display());
         } else {
-            println!("{prefix}{sum} {binary_marker}{escaped_filename}");
+            print!("{prefix}{sum} {binary_marker}{escaped_filename}");
         }
     }
     Ok(())
