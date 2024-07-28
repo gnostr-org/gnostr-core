@@ -1205,7 +1205,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "gnostr"
+name = "gnostr-core"
 version = "0.0.51"
 dependencies = [
  "bincode",

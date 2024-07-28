@@ -2,7 +2,7 @@
 # spell-checker:ignore (libs) bigdecimal datetime serde bincode fundu gethostid kqueue libselinux mangen memmap procfs uuhelp
 
 [package]
-name = "gnostr"
+name = "gnostr-core"
 version = "0.0.51"
 authors = ["uutils developers"]
 license = "MIT"
