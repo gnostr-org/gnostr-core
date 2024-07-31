@@ -392,7 +392,7 @@ manpages: build-coreutils
 		$(BUILDDIR)/coreutils manpage $(prog) > $(BUILDDIR)/man/$(PROG_PREFIX)$(prog).1; \
 	)
 	$(foreach prog, $(INSTALLEES), \
-		$(BUILDDIR)/gnostr-rs manpage $(prog) > $(BUILDDIR)/man/$(PROG_PREFIX)$(prog).1; \
+		$(BUILDDIR)/gnostr-core manpage $(prog) > $(BUILDDIR)/man/$(PROG_PREFIX)$(prog).1; \
 	)
 
 completions: build-coreutils
@@ -404,7 +404,7 @@ completions: build-coreutils
 	)
 
 install-test: #$(shell 2>/dev/null)
-	$(MAKE) install && git gnostr weeble && echo && git-gnostr blockheight && echo && gnostr-rs wobble && man gnostr-weeble
+	$(MAKE) install && git gnostr weeble && echo && git-gnostr blockheight && echo && gnostr-core wobble && man gnostr-weeble
 
 install: build manpages completions
 	mkdir -p $(INSTALLDIR_BIN)
@@ -412,7 +412,7 @@ install: build manpages completions
 	echo $(INSTALLEES)
 ifeq (${MULTICALL}, y)
 	$(INSTALL) $(BUILDDIR)/coreutils $(INSTALLDIR_BIN)/$(PROG_PREFIX)coreutils
-	$(INSTALL) $(BUILDDIR)/gnostr-rs $(INSTALLDIR_BIN)/gnostr-rs
+	$(INSTALL) $(BUILDDIR)/gnostr-core $(INSTALLDIR_BIN)/gnostr-core
 	$(INSTALL) $(BUILDDIR)/git-gnostr $(INSTALLDIR_BIN)/git-gnostr
 	cd $(INSTALLDIR_BIN) && $(foreach prog, $(filter-out coreutils, $(INSTALLEES)), \
 		ln -fs $(PROG_PREFIX)coreutils $(PROG_PREFIX)$(prog) &&) :
