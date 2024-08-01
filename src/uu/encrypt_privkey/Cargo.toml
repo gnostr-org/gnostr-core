@@ -20,7 +20,7 @@ path = "src/encrypt_privkey.rs"
 clap = { workspace = true }
 gnostr-types = "0.7.1-unstable"
 libc.workspace = true
-rtoolbox = "0.0.2"
+rtoolbox = "0.0.1"
 uucore = { workspace = true }
 zeroize = "1.8.1"
 
