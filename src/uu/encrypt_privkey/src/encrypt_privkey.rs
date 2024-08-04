@@ -23,6 +23,12 @@ pub mod options {
 #[uucore::main]
 pub fn uumain(args: impl uucore::Args) -> UResult<()> {
     let _args = args.collect_lossy();
+    if _args.len() == 1 {
+
+        print!("_args.len() = 1 = {}", _args.len());
+    }
+    if _args.len() == 2 {}
+    if _args.len() == 3 {}
     let name_args =  String::from("");
     let suffix =  String::from("");
     print!("{}", encrypt_privkey(&name_args, &suffix));
