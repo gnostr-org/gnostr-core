@@ -6,8 +6,8 @@
 // spell-checker:ignore (ToDO) fullname
 
 use clap::{crate_version, Arg, ArgAction, Command};
-use uucore::{format_usage, help_about, help_usage};
 use uucore::error::UResult;
+use uucore::{format_usage, help_about, help_usage};
 
 static ABOUT: &str = help_about!("encrypt_privkey.md");
 
@@ -24,13 +24,12 @@ pub mod options {
 pub fn uumain(args: impl uucore::Args) -> UResult<()> {
     let _args = args.collect_lossy();
     if _args.len() == 1 {
-
         print!("_args.len() = 1 = {}", _args.len());
     }
     if _args.len() == 2 {}
     if _args.len() == 3 {}
-    let name_args =  String::from("");
-    let suffix =  String::from("");
+    let name_args = String::from("");
+    let suffix = String::from("");
     print!("{}", encrypt_privkey(&name_args, &suffix));
     Ok(())
 }
@@ -81,7 +80,6 @@ mod rpassword;
 
 // Turn a hex private key into an encrypted private key
 fn encrypt_privkey(_fullname: &str, _suffix: &str) -> String {
-
     let private_key_str = rpassword::prompt_password("Private Key (hex or bech32): ").unwrap();
 
     let private_key = match PrivateKey::try_from_hex_string(&private_key_str) {
@@ -93,7 +91,9 @@ fn encrypt_privkey(_fullname: &str, _suffix: &str) -> String {
     };
 
     let mut log_n = rpassword::prompt_password("Enter the log_n rounds (default 0): ").unwrap();
-    if log_n.len() == 0 { log_n = String::from("0"); }
+    if log_n.len() == 0 {
+        log_n = String::from("0");
+    }
     log_n = log_n.trim().to_string();
     let log_n = log_n.parse::<u8>().unwrap();
     let mut password = rpassword::prompt_password("Password (default empty): ").unwrap();
