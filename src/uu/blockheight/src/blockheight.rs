@@ -143,9 +143,9 @@ fn blockheight(fullname: &str, suffix: &str) -> String {
     }
 }
 
+use reqwest::Url;
 use std::io::Read;
 use std::time::SystemTime;
-use reqwest::Url;
 
 pub fn get_blockheight() -> Result<String, &'static str> {
     let _blockheight_no_nl = _blockheight().unwrap().to_string();
