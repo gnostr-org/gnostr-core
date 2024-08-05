@@ -29,7 +29,6 @@
 //! ```
 
 #[allow(dead_code)]
-
 use rtoolbox::fix_line_issues::fix_line_issues;
 use rtoolbox::print_tty::{print_tty, print_writer};
 use rtoolbox::safe_string::SafeString;
@@ -146,7 +145,9 @@ mod windows {
     use std::io::{self, BufReader};
     use std::os::windows::io::FromRawHandle;
     use windows_sys::core::PCSTR;
-    use windows_sys::Win32::Foundation::{GENERIC_READ, GENERIC_WRITE, HANDLE, INVALID_HANDLE_VALUE};
+    use windows_sys::Win32::Foundation::{
+        GENERIC_READ, GENERIC_WRITE, HANDLE, INVALID_HANDLE_VALUE,
+    };
     use windows_sys::Win32::Storage::FileSystem::{
         CreateFileA, FILE_SHARE_READ, FILE_SHARE_WRITE, OPEN_EXISTING,
     };
