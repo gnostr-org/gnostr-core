@@ -25,7 +25,7 @@ ME_parent_dir_abs="$("${REALPATH}" -mP -- "${ME_parent_dir}" || "${REALPATH}" --
 default_utils="base32 base64 basename bech32 cat cksum cli comm cp cut date dircolors dirname echo
 encrypt_privkey env expand
 expr factor false fmt fold get_relays git hashsum head join keypair legit link ln ls mkdir mktemp more mv nip11 nl od paste post post_event printenv
-printf privkey_to_bech32 ptx pubkey_to_bech32 pwd readlink realpath reflog rm rmdir seq shred shuf sleep sort split sum tac tail tee template
+printf privkey_to_bech32 ptx pubkey_to_bech32 pwd qr readlink realpath reflog rm rmdir seq shred shuf sleep sort split sum tac tail tee template
 test tr true truncate tsort tui unexpand uniq wc weeble wobble xq yes"
 
 project_main_dir="${ME_parent_dir_abs}"
