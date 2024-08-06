@@ -28,7 +28,6 @@
 //! println!("Your password is {}", password);
 //! ```
 
-#[allow(dead_code)]
 use rtoolbox::fix_line_issues::fix_line_issues;
 use rtoolbox::print_tty::{print_tty, print_writer};
 use rtoolbox::safe_string::SafeString;
