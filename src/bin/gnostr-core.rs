@@ -151,7 +151,7 @@ fn gen_completions<T: uucore::Args>(
     args: impl Iterator<Item = OsString>,
     util_map: &UtilityMap<T>,
 ) -> ! {
-    let all_utilities: Vec<_> = std::iter::once("coreutils")
+    let all_utilities: Vec<_> = std::iter::once("gnostr-core")
         .chain(util_map.keys().copied())
         .collect();
 
@@ -172,7 +172,7 @@ fn gen_completions<T: uucore::Args>(
     let utility = matches.get_one::<String>("utility").unwrap();
     let shell = *matches.get_one::<Shell>("shell").unwrap();
 
-    let mut command = if utility == "coreutils" {
+    let mut command = if utility == "gnostr-core" {
         gen_coreutils_app(util_map)
     } else {
         util_map.get(utility).unwrap().1()
@@ -191,7 +191,7 @@ fn gen_manpage<T: uucore::Args>(
     args: impl Iterator<Item = OsString>,
     util_map: &UtilityMap<T>,
 ) -> ! {
-    let all_utilities: Vec<_> = std::iter::once("coreutils")
+    let all_utilities: Vec<_> = std::iter::once("gnostr-core")
         .chain(util_map.keys().copied())
         .collect();
 
@@ -205,8 +205,9 @@ fn gen_manpage<T: uucore::Args>(
         .get_matches_from(std::iter::once(OsString::from("manpage")).chain(args));
 
     let utility = matches.get_one::<String>("utility").unwrap();
+    print!("{}",utility);
 
-    let command = if utility == "coreutils" {
+    let command = if utility == "gnostr-core" {
         gen_coreutils_app(util_map)
     } else {
         util_map.get(utility).unwrap().1()
@@ -222,7 +223,7 @@ fn gen_manpage<T: uucore::Args>(
 /// # Panics
 /// Panics if the utility map is empty
 fn gen_coreutils_app<T: uucore::Args>(util_map: &UtilityMap<T>) -> Command {
-    let mut command = Command::new("coreutils");
+    let mut command = Command::new("gnostr-core");
     for (name, (_, sub_app)) in util_map {
         // Recreate a small subcommand with only the relevant info
         // (name & short description)
