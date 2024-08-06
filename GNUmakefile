@@ -123,6 +123,7 @@ PROGS       := \
 	pubkey-to-bech32 \
 	pubkey_to_bech32 \
 	pwd \
+	qr \
 	readlink \
 	realpath \
 	reflog \
