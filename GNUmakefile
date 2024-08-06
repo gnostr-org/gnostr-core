@@ -394,6 +394,9 @@ manpages: build-coreutils
 	$(foreach prog, $(INSTALLEES), \
 		$(BUILDDIR)/gnostr-core manpage $(prog) > $(BUILDDIR)/man/$(PROG_PREFIX)$(prog).1; \
 	)
+	$(foreach prog, $(INSTALLEES), \
+		$(BUILDDIR)/git-gnostr manpage $(prog) > $(BUILDDIR)/man/$(PROG_PREFIX)$(prog).1; \
+	)
 
 completions: build-coreutils
 	mkdir -p $(BUILDDIR)/completions/zsh $(BUILDDIR)/completions/bash $(BUILDDIR)/completions/fish
@@ -401,6 +404,16 @@ completions: build-coreutils
 		$(BUILDDIR)/coreutils completion $(prog) zsh > $(BUILDDIR)/completions/zsh/_$(PROG_PREFIX)$(prog); \
 		$(BUILDDIR)/coreutils completion $(prog) bash > $(BUILDDIR)/completions/bash/$(PROG_PREFIX)$(prog); \
 		$(BUILDDIR)/coreutils completion $(prog) fish > $(BUILDDIR)/completions/fish/$(PROG_PREFIX)$(prog).fish; \
+	)
+	$(foreach prog, $(INSTALLEES), \
+		$(BUILDDIR)/gnostr-core completion $(prog) zsh > $(BUILDDIR)/completions/zsh/_$(PROG_PREFIX)$(prog); \
+		$(BUILDDIR)/gnostr-core completion $(prog) bash > $(BUILDDIR)/completions/bash/$(PROG_PREFIX)$(prog); \
+		$(BUILDDIR)/gnostr-core completion $(prog) fish > $(BUILDDIR)/completions/fish/$(PROG_PREFIX)$(prog).fish; \
+	)
+	$(foreach prog, $(INSTALLEES), \
+		$(BUILDDIR)/git-gnostr completion $(prog) zsh > $(BUILDDIR)/completions/zsh/_$(PROG_PREFIX)$(prog); \
+		$(BUILDDIR)/git-gnostr completion $(prog) bash > $(BUILDDIR)/completions/bash/$(PROG_PREFIX)$(prog); \
+		$(BUILDDIR)/git-gnostr completion $(prog) fish > $(BUILDDIR)/completions/fish/$(PROG_PREFIX)$(prog).fish; \
 	)
 
 install-test: #$(shell 2>/dev/null)

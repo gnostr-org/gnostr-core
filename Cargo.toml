@@ -113,6 +113,7 @@ feat_common_core = [
   "ptx",
   "pubkey_to_bech32", ##gnostr
   "pwd",
+  "qr", ##qr
   "readlink",
   "realpath",
   "reflog", ##gnostr
@@ -279,6 +280,7 @@ test = ["uu_test"]
 
 [workspace.package]
 readme = "README.package.md"
+version = "0.0.51"
 
 [workspace.dependencies]
 ansi-width = "0.1.0"
@@ -460,6 +462,7 @@ privkey_to_bech32 = { optional = true, version = "0.0.27", package = "uu_privkey
 ptx = { optional = true, version = "0.0.27", package = "uu_ptx", path = "src/uu/ptx" }
 pubkey_to_bech32 = { optional = true, version = "0.0.27", package = "uu_pubkey_to_bech32", path = "src/uu/pubkey_to_bech32" }
 pwd = { optional = true, version = "0.0.27", package = "uu_pwd", path = "src/uu/pwd" }
+qr = { optional = true, version = "0.0.27", package = "uu_qr", path = "src/uu/qr" }
 readlink = { optional = true, version = "0.0.27", package = "uu_readlink", path = "src/uu/readlink" }
 realpath = { optional = true, version = "0.0.27", package = "uu_realpath", path = "src/uu/realpath" }
 reflog = { optional = true, version = "0.0.27", package = "uu_reflog", path = "src/uu/reflog" }

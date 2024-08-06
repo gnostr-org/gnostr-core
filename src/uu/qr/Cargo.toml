@@ -1,0 +1,30 @@
+[package]
+name = "uu_qr"
+version = "0.0.27"
+authors = ["uutils developers"]
+license = "MIT"
+description = "basename ~ (uutils) display PATHNAME with leading directory components removed"
+
+homepage = "https://github.com/uutils/coreutils"
+repository = "https://github.com/uutils/coreutils/tree/main/src/uu/basename"
+keywords = ["coreutils", "uutils", "cross-platform", "cli", "utility"]
+categories = ["command-line-utilities"]
+edition = "2021"
+
+readme.workspace = true
+
+[lib]
+path = "src/qr.rs"
+
+[dependencies]
+clap = { workspace = true }
+uucore = { workspace = true }
+hex = "0.4.3"
+image = "0.25.2"
+qrcode = "0.14.1"
+sha2 = "0.10.8"
+
+
+[[bin]]
+name = "qr"
+path = "src/main.rs"
