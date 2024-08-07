@@ -149,7 +149,7 @@ use std::time::SystemTime;
 
 pub fn get_blockheight() -> Result<String, &'static str> {
     let _blockheight_no_nl = _blockheight().unwrap().to_string();
-    Ok(format!("{}", _blockheight().unwrap().to_string()))
+    Ok(format!("{}", _blockheight().unwrap()))
 }
 
 pub fn _blockheight() -> Result<f64, &'static str> {
@@ -165,5 +165,5 @@ pub fn _blockheight() -> Result<f64, &'static str> {
     res.read_to_string(&mut tmp_string).unwrap();
     let tmp_u64 = tmp_string.parse::<u64>().unwrap_or(0);
     let blockheight = tmp_u64 as f64;
-    return Ok(blockheight);
+    Ok(blockheight)
 }
