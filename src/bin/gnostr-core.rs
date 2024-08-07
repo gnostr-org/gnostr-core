@@ -49,6 +49,75 @@ fn name(binary_path: &Path) -> Option<&str> {
 
 #[allow(clippy::cognitive_complexity)]
 fn main() {
+    let args = std::env::args();
+
+
+    //TODO:intercept for gnostr args
+    //gnostr --sec <sha256> -t <string> --tag <string> <string> --content <string> --pow <int> --dm <sha256> etc...
+
+
+    // RELAY=wss://nos.lol PORT=6102 SECRET=0000000000000000000000000000000000000000000000000000000000000001 gnostr-core
+    let secret_key = "SECRET";
+    let default_secret: String =
+        String::from("0000000000000000000000000000000000000000000000000000000000000001");
+    let relay_key = "RELAY";
+    let default_relay: String = String::from("wss://nos.lol");
+    let port_key = "PORT";
+    let default_port = 6102;
+
+    let secret = match std::env::var(secret_key) {
+        Ok(val) => val,
+        Err(_) => {
+            //println!("default_secret_key={}", default_secret);
+            default_secret
+        }
+    };
+
+    let relay = match std::env::var(relay_key) {
+        Ok(val) => val,
+        Err(err) => {
+            //println!("{}: {}", err, relay_key);
+            //process::exit(1);
+            default_relay
+        }
+    };
+
+    let port = match std::env::var(port_key) {
+        Ok(val) => match val.parse::<u16>() {
+            Ok(port) => port,
+            Err(_) => {
+                println!("default port {} will be used.", default_port);
+                default_port
+            }
+        },
+        Err(_) => {
+            //println!(
+              //  "\"{}\" is not defined in environment variables. default port will be used.",
+                //port_key
+            //);
+            default_port
+        }
+    };
+
+    println!("secret={}", secret);
+    println!("relay={}", relay);
+    println!("port={}", port);
+
+    std::process::exit(0);
+    let mut count: i32 = 0;
+    for arg in args {
+        println!("arg={:?}", arg);
+        if arg == "--sec" {
+            println!("arg=--sec:\ndo something\n{:?}", arg);
+
+            //get next arg and assign to SECRET
+        }
+        count += 1;
+    }
+    print!("count={}", count);
+    std::process::exit(0);
+
+    #[allow(unreachable_code)]
     uucore::panic::mute_sigpipe_panic();
 
     let utils = util_map();
@@ -205,7 +274,7 @@ fn gen_manpage<T: uucore::Args>(
         .get_matches_from(std::iter::once(OsString::from("manpage")).chain(args));
 
     let utility = matches.get_one::<String>("utility").unwrap();
-    print!("{}",utility);
+    print!("{}", utility);
 
     let command = if utility == "gnostr-core" {
         gen_coreutils_app(util_map)
