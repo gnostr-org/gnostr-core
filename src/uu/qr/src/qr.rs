@@ -19,7 +19,6 @@ pub mod options {
     pub static DATA: &str = "data";
 }
 
-
 use sha2::{Digest, Sha256};
 use std::env;
 use std::str;
@@ -34,7 +33,7 @@ pub fn sha256_string(data: &str) -> Result<String, String> {
 pub fn help() {
     use std::process;
     let package_name = env!("CARGO_PKG_NAME");
-    print!("{} <data>\n", package_name.replace("_", "-"));
+    println!("{} <data>", package_name.replace('_', "-"));
     process::exit(0);
 }
 pub fn version() {
@@ -94,7 +93,6 @@ mod tests {
     }
 }
 
-
 #[uucore::main]
 pub fn uumain(args: impl uucore::Args) -> UResult<()> {
     let args = args.collect_lossy();
@@ -132,7 +130,7 @@ pub fn uumain(args: impl uucore::Args) -> UResult<()> {
     //
 
     for path in name_args {
-    print!("LINE:135:uumain\n");
+        println!("LINE:135:uumain");
         print!("{}", qr(path));
     }
 
@@ -140,7 +138,6 @@ pub fn uumain(args: impl uucore::Args) -> UResult<()> {
 }
 
 pub fn uu_app() -> Command {
-
     //print!("LINE:144:uumain");
     //use std::env;
     //let _package_name = env!("CARGO_PKG_NAME");
@@ -168,7 +165,7 @@ pub fn uu_app() -> Command {
     //    }
     //    std::process::exit(0);
     //} else {
-        //help();
+    //help();
     //}
 
     //print!("LINE:174:uumain");
@@ -198,14 +195,14 @@ fn qr(fullname: &str) -> String {
     // the original `fullname` to avoid returning the empty path.
     let path = if path.is_empty() { fullname } else { path };
 
-    print!("LINE:135:uumain");
+    //print!("LINE:201:uumain");
     // Convert to path buffer and get last path component
     let pb = PathBuf::from(path);
-    print!("LINE:135:uumain");
+    //print!("LINE:204:uumain");
     match pb.components().last() {
         Some(c) => {
             let name = c.as_os_str().to_str().unwrap();
-                name.to_string()
+            name.to_string()
         }
 
         None => String::new(),
