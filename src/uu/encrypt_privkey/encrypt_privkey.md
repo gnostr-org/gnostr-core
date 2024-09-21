@@ -1,9 +1,8 @@
 # encrypt_privkey
 
 ```
-encrypt_privkey [-z] NAME [SUFFIX]
-encrypt_privkey OPTION... NAME...
+encrypt_privkey
 ```
 
-Print NAME with any leading directory components removed
-If specified, also remove a trailing SUFFIX
+encrypt a nostr (sha256) private key dialogue
+gnostr-core encrypt_privkey

@@ -14,67 +14,20 @@ static ABOUT: &str = help_about!("encrypt_privkey.md");
 const USAGE: &str = help_usage!("encrypt_privkey.md");
 
 pub mod options {
+    pub static PRIVKEY: &str = "privkey";
     pub static MULTIPLE: &str = "multiple";
     pub static NAME: &str = "name";
     pub static SUFFIX: &str = "suffix";
     pub static ZERO: &str = "zero";
 }
 
-#[uucore::main]
-pub fn uumain(args: impl uucore::Args) -> UResult<()> {
-    let _args = args.collect_lossy();
-    let name_args = String::from("");
-    let suffix = String::from("");
-    print!("{}", encrypt_privkey(&name_args, &suffix));
-    Ok(())
-}
-
-pub fn uu_app() -> Command {
-    Command::new(uucore::util_name())
-        .version(crate_version!())
-        .about(ABOUT)
-        .override_usage(format_usage(USAGE))
-        .infer_long_args(true)
-        .arg(
-            Arg::new(options::MULTIPLE)
-                .short('a')
-                .long(options::MULTIPLE)
-                .help("support multiple arguments and treat each as a NAME")
-                .action(ArgAction::SetTrue)
-                .overrides_with(options::MULTIPLE),
-        )
-        .arg(
-            Arg::new(options::NAME)
-                .action(clap::ArgAction::Append)
-                .value_hint(clap::ValueHint::AnyPath)
-                .hide(true)
-                .trailing_var_arg(true),
-        )
-        .arg(
-            Arg::new(options::SUFFIX)
-                .short('s')
-                .long(options::SUFFIX)
-                .value_name("SUFFIX")
-                .help("remove a trailing SUFFIX; implies -a")
-                .overrides_with(options::SUFFIX),
-        )
-        .arg(
-            Arg::new(options::ZERO)
-                .short('z')
-                .long(options::ZERO)
-                .help("end each output line with NUL, not newline")
-                .action(ArgAction::SetTrue)
-                .overrides_with(options::ZERO),
-        )
-}
-//#[allow(clippy::uninlined_format_args)]
-
 use gnostr_types::PrivateKey;
 use zeroize::Zeroize;
 mod rpassword;
 
 // Turn a hex private key into an encrypted private key
-fn encrypt_privkey(_fullname: &str, _suffix: &str) -> String {
+#[allow(clippy::uninlined_format_args)]
+fn encrypt_privkey(privkey: String) -> String {
     let private_key_str = rpassword::prompt_password("Private Key (hex or bech32): ").unwrap();
 
     let private_key = match PrivateKey::try_from_hex_string(&private_key_str) {
@@ -97,4 +50,28 @@ fn encrypt_privkey(_fullname: &str, _suffix: &str) -> String {
         .expect("Could not export encrypted private key");
     password.zeroize();
     encrypted_private_key.to_string()
+}
+
+#[uucore::main]
+pub fn uumain(args: impl uucore::Args) -> UResult<()> {
+    let _args = args.collect_lossy();
+    let privkey = String::from("");
+    print!("{}", encrypt_privkey(privkey));
+    Ok(())
+}
+
+pub fn uu_app() -> Command {
+    Command::new(uucore::util_name())
+        .version(crate_version!())
+        .about(ABOUT)
+        .override_usage(format_usage(USAGE))
+        .infer_long_args(true)
+        .arg(
+            Arg::new(options::PRIVKEY)
+                //.short('')
+                .long(options::PRIVKEY)
+                .help("encrypt privkey (sha256 hash)")
+                .action(ArgAction::SetTrue),
+            //.overrides_with(options::MULTIPLE),
+        )
 }
