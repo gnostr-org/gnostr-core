@@ -47,37 +47,226 @@ fn name(binary_path: &Path) -> Option<&str> {
     binary_path.file_stem()?.to_str()
 }
 
+fn get_arg_count<'a>(mut arg_count: u32) -> u32 {
+    let args = std::env::args()
+        .skip(1) // skip program name
+        .peekable(); // allow looking forward one
+
+    for arg in args {
+        arg_count += 1;
+        #[cfg(debug_assertions)]
+        print!("{}={} ", arg, arg_count);
+    }
+    #[cfg(debug_assertions)]
+    println!("");
+    arg_count
+}
 #[allow(clippy::cognitive_complexity)]
 fn main() {
-    let args = std::env::args();
+    let mut arg_count: u32 = 0;
+    let mut tag_count: u32 = 0;
+    let mut e_count: u32 = 0;
+    let mut p_count: u32 = 0;
+    let mut t_count: u32 = 0;
 
+    let mut content: String = String::new();
+    let mut dm: String = String::new();
+    let mut envelope: String = String::new();
+    let mut kind: String = String::new();
+    let mut created_at: String = String::new();
+    let mut sec: String = String::new();
+    let mut pow: String = String::new();
+    let mut mine_pubkey: String = String::new();
+    let mut tag: Vec<String> = Vec::new();
+    let mut hash: String = String::new();
+    let mut e: String = String::new();
+    let mut p: String = String::new();
+    let mut t: Vec<String> = Vec::new();
+    // RELAY=wss://nos.lol PORT=6102 SECRET=0000000000000000000000000000000000000000000000000000000000000001 gnostr-core
+    let default_secret: String =
+        String::from("0000000000000000000000000000000000000000000000000000000000000001");
+    let relay_key: String = String::new();
+    let default_relay: String = String::from("wss://e.nos.lol");
+    let port_key = String::new();
+    let default_port = 6102;
+
+    let args = std::env::args()
+        .skip(1) // skip program name
+        .peekable(); // allow looking forward one
+    #[cfg(debug_assertions)]
+    println!("args={:?}", args);
+
+    let mut arg_count = get_arg_count(0);
+    #[cfg(debug_assertions)]
+    println!("get_arg_count(0)={}", arg_count);
+    for arg in args {
+        arg_count -= 1;
+        #[cfg(debug_assertions)]
+        println!("for {} in args={}", arg, arg_count);
+    }
+    let mut args = std::env::args()
+        .skip(1) // skip program name
+        .peekable(); // allow looking forward one
+
+    match args.peek().map(|x| x.as_ref()) {
+        Some("--content") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            //args.next(); // Skip the flag
+            content = args.next().unwrap();
+            #[cfg(debug_assertions)]
+            println!("82:content={}", content);
+        }
+        Some("--dm") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            //args.next(); // Skip the flag
+            dm = args.next().unwrap();
+            #[cfg(debug_assertions)]
+            println!("82:content={}", content);
+        }
+        Some("--envelope") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            //args.next(); // Skip the flag
+            envelope.push_str(&args.next().unwrap());
+            #[cfg(debug_assertions)]
+            println!("87:tag={:?}", tag);
+        }
+        Some("--kind") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            //args.next(); // Skip the flag
+            t.push(args.next().unwrap());
+            #[cfg(debug_assertions)]
+            println!("87:tag={:?}", tag);
+        }
+        Some("--created-at") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            //args.next(); // Skip the flag
+            t.push(args.next().unwrap());
+            #[cfg(debug_assertions)]
+            println!("103:nip={:?}", tag);
+        }
+        Some("--sec") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            //args.next(); // Skip the flag
+            t.push(args.next().unwrap());
+            #[cfg(debug_assertions)]
+            println!("103:nip={:?}", tag);
+        }
+        Some("--pow") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            //args.next(); // Skip the flag
+            t.push(args.next().unwrap());
+            #[cfg(debug_assertions)]
+            println!("103:nip={:?}", tag);
+        }
+        Some("--mine-pubkey") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            //args.next(); // Skip the flag
+            mine_pubkey = args.next().unwrap();
+            #[cfg(debug_assertions)]
+            println!("125:args.peek()={:?}", args.peek());
+            #[cfg(debug_assertions)]
+            println!("126:nip={:?}", mine_pubkey);
+        }
+        Some("--tag") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            args.next(); // Skip the flag
+            tag.push(args.next().unwrap());
+            #[cfg(debug_assertions)]
+            println!("131:args.peek()={:?}", args.peek());
+            #[cfg(debug_assertions)]
+            println!("132:secret={:?}", tag);
+            tag_count += 1;
+        }
+        Some("--hash") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            args.next(); // Skip the flag
+            hash = args.next().unwrap();
+            #[cfg(debug_assertions)]
+            println!("138:args.peek()={:?}", args.peek());
+            #[cfg(debug_assertions)]
+            println!("139:hash={}", hash);
+        }
+        Some("-e") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            args.next(); // Skip the flag
+            e.push_str(&args.next().unwrap());
+            #[cfg(debug_assertions)]
+            println!("145:args.peek()={:?}", args.peek());
+            #[cfg(debug_assertions)]
+            println!("146:secret={}", e);
+            e_count += 1;
+        }
+        Some("-p") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            args.next(); // Skip the flag
+            p.push_str(&args.next().unwrap());
+            #[cfg(debug_assertions)]
+            println!("152:args.peek()={:?}", args.peek());
+            #[cfg(debug_assertions)]
+            println!("153:secret={}", p);
+            p_count += 1;
+        }
+        Some("-t") => {
+            #[cfg(debug_assertions)]
+            println!("{:?}", args);
+            args.next(); // Skip the flag
+            t.push(args.next().unwrap());
+            #[cfg(debug_assertions)]
+            println!("159:args.peek()={:?}", args.peek());
+            #[cfg(debug_assertions)]
+            println!("160:secret={:?}", t);
+            t_count += 1;
+        }
+        _ => {
+            #[cfg(debug_assertions)]
+            println!("handle no option");
+        }
+    } //end match
+    #[cfg(debug_assertions)]
+    println!("198:tag={:?}", tag);
+
+    for tags in tag {
+        #[cfg(debug_assertions)]
+        print!("201:t={}", tags);
+    }
+    for ts in t {
+        #[cfg(debug_assertions)]
+        print!("204:t={}", ts);
+    }
+    //}
 
     //TODO:intercept for gnostr args
     //gnostr --sec <sha256> -t <string> --tag <string> <string> --content <string> --pow <int> --dm <sha256> etc...
 
-
-    // RELAY=wss://nos.lol PORT=6102 SECRET=0000000000000000000000000000000000000000000000000000000000000001 gnostr-core
-    let secret_key = "SECRET";
-    let default_secret: String =
-        String::from("0000000000000000000000000000000000000000000000000000000000000001");
-    let relay_key = "RELAY";
-    let default_relay: String = String::from("wss://nos.lol");
-    let port_key = "PORT";
-    let default_port = 6102;
-
-    let secret = match std::env::var(secret_key) {
+    //SECRET=<secret_key> gnostr ...
+    if sec.is_empty() {
+        sec = match std::env::var("SECRET") {
+            Ok(val) => val,
+            Err(_) => {
+                #[cfg(debug_assertions)]
+                println!("default_secret_key={}", default_secret);
+                default_secret
+            }
+        };
+    }
+    //SECRET=<secret_key> RELAY=wss://<url> gnostr ...
+    let relay = match std::env::var("RELAY") {
         Ok(val) => val,
         Err(_) => {
-            //println!("default_secret_key={}", default_secret);
-            default_secret
-        }
-    };
-
-    let relay = match std::env::var(relay_key) {
-        Ok(val) => val,
-        Err(err) => {
-            //println!("{}: {}", err, relay_key);
-            //process::exit(1);
+            #[cfg(debug_assertions)]
+            println!("relay_key={}", relay_key);
             default_relay
         }
     };
@@ -92,31 +281,43 @@ fn main() {
         },
         Err(_) => {
             //println!(
-              //  "\"{}\" is not defined in environment variables. default port will be used.",
-                //port_key
+            //  "\"{}\" is not defined in environment variables. default port will be used.",
+            //port_key
             //);
             default_port
         }
     };
+    #[cfg(debug_assertions)]
+    println!("147:sec={}", sec);
+    #[cfg(debug_assertions)]
+    println!("148:relay={}", relay);
+    #[cfg(debug_assertions)]
+    println!("149:port={}", port);
 
-    println!("secret={}", secret);
-    println!("relay={}", relay);
-    println!("port={}", port);
-
-    std::process::exit(0);
-    let mut count: i32 = 0;
+    //std::process::exit(0);
+    let args = std::env::args();
     for arg in args {
-        println!("arg={:?}", arg);
+        #[cfg(debug_assertions)]
+        println!("224:arg={:?}", arg);
         if arg == "--sec" {
             println!("arg=--sec:\ndo something\n{:?}", arg);
-
-            //get next arg and assign to SECRET
         }
-        count += 1;
+        if arg_count > 1 {
+            arg_count -= 1;
+        }
     }
-    print!("count={}", count);
-    std::process::exit(0);
-
+    #[cfg(debug_assertions)]
+    print!("arg_count={}", arg_count);
+    #[cfg(debug_assertions)]
+    print!("tag_count={}", tag_count);
+    #[cfg(debug_assertions)]
+    print!("e_count={}", e_count);
+    #[cfg(debug_assertions)]
+    print!("p_count={}", p_count);
+    #[cfg(debug_assertions)]
+    print!("t_count={}", t_count);
+    #[allow(unreachable_code)]
+    //EXITstd::process::exit(0);
     #[allow(unreachable_code)]
     uucore::panic::mute_sigpipe_panic();
 
