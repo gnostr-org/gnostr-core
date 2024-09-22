@@ -1,0 +1,29 @@
+[package]
+name = "uu_decrypt_privkey"
+version = "0.0.27"
+authors = ["uutils developers"]
+license = "MIT"
+description = "gnost-core encrypt_privkey"
+
+homepage = "https://github.com/gnostr-org/gnostr-core"
+repository = "https://github.com/gnostr-org/gnostr-core/tree/main/src/uu/decrypt_privkey"
+keywords = ["gnostr", "gnostr-core", "decrypt_privkey"]
+categories = ["command-line-utilities"]
+edition = "2021"
+
+readme.workspace = true
+
+[lib]
+path = "src/decrypt_privkey.rs"
+
+[dependencies]
+clap = { workspace = true }
+gnostr-types = "0.7.1-unstable"
+libc.workspace = true
+rtoolbox = "0.0.1"
+uucore = { workspace = true }
+zeroize = "1.8.1"
+
+[[bin]]
+name = "decrypt-privkey"
+path = "src/main.rs"
