@@ -19,7 +19,7 @@ on:
   pull_request:
   push:
     tags:
-      - '*'
+      - '**'
     branches:
       - m**
 
