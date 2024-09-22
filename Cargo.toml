@@ -7,17 +7,39 @@ version = "0.0.51"
 authors = ["uutils developers"]
 license = "MIT"
 description = "coreutils ~ GNU coreutils (updated); implemented as universal (cross-platform) utils, written in Rust"
-default-run = "coreutils"
+default-run = "gnostr-core"
 
 homepage = "https://github.com/uutils/coreutils"
 repository = "https://github.com/uutils/coreutils"
 readme = "README.md"
 keywords = ["coreutils", "uutils", "cross-platform", "cli", "utility"]
 categories = ["command-line-utilities"]
-rust-version = "1.74.0"
 edition = "2021"
 
 build = "build.rs"
+
+[[bin]]
+name = "coreutils"
+path = "src/bin/coreutils.rs"
+doc = true
+
+[[bin]]
+name = "gnostr-core"
+path = "src/bin/gnostr-core.rs"
+doc = true
+## [[bin]]
+## name = "git-gnostr"
+## path = "src/bin/git-gnostr.rs"
+
+[[bin]]
+name = "gnostr-get-relays"
+path = "src/bin/gnostr-get-relays.rs"
+doc = true
+
+[[bin]]
+name = "uudoc"
+path = "src/bin/uudoc.rs"
+required-features = ["uudoc"]
 
 [package.metadata.docs.rs]
 all-features = true
@@ -44,161 +66,27 @@ feat_acl = ["cp/feat_acl"]
 # NOTE:
 # * The selinux(-sys) crate requires `libselinux` headers and shared library to be accessible in the C toolchain at compile time.
 # * Running a uutils compiled with `feat_selinux` requires an SELinux enabled Kernel at run time.
-feat_selinux = [
-  "cp/selinux",
-  "id/selinux",
-  "ls/selinux",
-  "selinux",
-  "feat_require_selinux",
-]
+feat_selinux = ["cp/selinux", "id/selinux", "ls/selinux", "selinux", "feat_require_selinux"]
 ##
 ## feature sets
 ## (common/core and Tier1) feature sets
 # "feat_common_core" == baseline core set of utilities which can be built/run on most targets
-feat_common_core = [
-  "base32",
-  "base64",
-  "basename",
-  "basenc",
-  "bech32", ##gnostr
-  "blockheight", ##gnostr
-  "cat",
-  "cksum",
-  "cli",
-  "comm",
-  "cp",
-  "csplit",
-  "cut",
-  "date",
-  "df",
-  "dir",
-  "dircolors",
-  "dirname",
-  "dd",
-  "du",
-  "echo",
-  "encrypt_privkey", ##gnostr
-  "env",
-  "expand",
-  "expr",
-  "factor",
-  "false",
-  "fmt",
-  "fold",
-  "git", ##gnostr
-  "get_relays", ##gnostr
-  "hashsum",
-  "head",
-  "join",
-  "keypair", ##gnostr
-  "legit", ##gnostr
-  "link",
-  "ln",
-  "ls",
-  "mkdir",
-  "mktemp",
-  "more",
-  "mv",
-  "nl",
-  "nip11", ##gnostr
-  "numfmt",
-  "od",
-  "paste",
-  "post", ##gnostr
-  "post_event", ##gnostr
-  "pr",
-  "printenv",
-  "printf",
-  "privkey_to_bech32", ##gnostr
-  "ptx",
-  "pubkey_to_bech32", ##gnostr
-  "pwd",
-  "qr", ##qr
-  "readlink",
-  "realpath",
-  "reflog", ##gnostr
-  "rm",
-  "rmdir",
-  "seq",
-  "shred",
-  "shuf",
-  "sleep",
-  "sort",
-  "split",
-  "sum",
-  "tac",
-  "tail",
-  "tee",
-  "template", ##gnostr
-  "test",
-  "tr",
-  "true",
-  "truncate",
-  "tsort",
-  "tui", ##gnostr
-  "touch",
-  "unexpand",
-  "uniq",
-  "unlink",
-  "vdir",
-  "wc",
-  "weeble", ##gnostr
-  "xq", ##gnostr
-  "yes",
-]
+feat_common_core = ["base32", "base64", "basename", "basenc", "bech32", "blockheight", "cat", "cksum", "cli", "comm", "cp", "csplit", "cut", "date", "decrypt_privkey", "df", "dir", "dircolors", "dirname", "dd", "du", "echo", "encrypt_privkey", "env", "expand", "expr", "factor", "false", "fmt", "fold", "git", "get_relays", "hashsum", "head", "join", "keypair", "legit", "link", "ln", "ls", "mkdir", "mktemp", "more", "mv", "nl", "nip11", "numfmt", "od", "paste", "post", "post_event", "pr", "printenv", "printf", "privkey_to_bech32", "ptx", "pubkey_to_bech32", "pwd", "readlink", "realpath", "reflog", "rm", "rmdir", "seq", "shred", "shuf", "sleep", "sort", "split", "sum", "tac", "tail", "tee", "template", "test", "tr", "true", "truncate", "tsort", "tui", "touch", "unexpand", "uniq", "unlink", "vdir", "wc", "weeble", "xq", "yes"]
 # "feat_Tier1" == expanded set of utilities which can be built/run on the usual rust "Tier 1" target platforms (ref: <https://forge.rust-lang.org/release/platform-support.html>)
-feat_Tier1 = [
-  "feat_common_core",
-  #
-  "arch",
-  "hostname",
-  "nproc",
-  "sync",
-  "touch",
-  "uname",
-  "whoami",
-]
+feat_Tier1 = ["feat_common_core", "arch", "hostname", "nproc", "sync", "touch", "uname", "whoami"]
 ## (primary platforms) feature sets
 # "feat_os_macos" == set of utilities which can be built/run on the MacOS platform
-feat_os_macos = [
-  "feat_os_unix", ## == a modern/usual *nix platform
-  #
-  "feat_require_unix_hostid",
-]
+feat_os_macos = ["feat_os_unix", "feat_require_unix_hostid"]
 # "feat_os_unix" == set of utilities which can be built/run on modern/usual *nix platforms
-feat_os_unix = [
-  "feat_Tier1",
-  #
-  "feat_require_crate_cpp",
-  "feat_require_unix",
-  "feat_require_unix_utmpx",
-  "feat_require_unix_hostid",
-]
+feat_os_unix = ["feat_Tier1", "feat_require_crate_cpp", "feat_require_unix", "feat_require_unix_utmpx", "feat_require_unix_hostid"]
 # "feat_os_windows" == set of utilities which can be built/run on modern/usual windows platforms
-feat_os_windows = [
-  "feat_Tier1", ## == "feat_os_windows_legacy" + "hostname"
-]
+feat_os_windows = ["feat_Tier1"]
 ## (secondary platforms) feature sets
 # "feat_os_unix_gnueabihf" == set of utilities which can be built/run on the "arm-unknown-linux-gnueabihf" target (ARMv6 Linux [hardfloat])
-feat_os_unix_gnueabihf = [
-  "feat_Tier1",
-  #
-  "feat_require_unix",
-  "feat_require_unix_hostid",
-  "feat_require_unix_utmpx",
-]
+feat_os_unix_gnueabihf = ["feat_Tier1", "feat_require_unix", "feat_require_unix_hostid", "feat_require_unix_utmpx"]
 # "feat_os_unix_musl" == set of utilities which can be built/run on targets binding to the "musl" library (ref: <https://musl.libc.org/about.html>)
-feat_os_unix_musl = [
-  "feat_Tier1",
-  #
-  "feat_require_unix",
-  "feat_require_unix_hostid",
-]
-feat_os_unix_android = [
-  "feat_Tier1",
-  #
-  "feat_require_unix",
-]
+feat_os_unix_musl = ["feat_Tier1", "feat_require_unix", "feat_require_unix_hostid"]
+feat_os_unix_android = ["feat_Tier1", "feat_require_unix"]
 ## feature sets with requirements (restricting cross-platform availability)
 #
 # ** NOTE: these `feat_require_...` sets should be minimized as much as possible to encourage cross-platform availability of utilities
@@ -206,26 +94,7 @@ feat_os_unix_android = [
 # "feat_require_crate_cpp" == set of utilities requiring the `cpp` crate (which fail to compile on several platforms; as of 2020-04-23)
 feat_require_crate_cpp = ["stdbuf"]
 # "feat_require_unix" == set of utilities requiring support which is only available on unix platforms (as of 2020-04-23)
-feat_require_unix = [
-  "chgrp",
-  "chmod",
-  "chown",
-  "chroot",
-  "groups",
-  "id",
-  "install",
-  "kill",
-  "logname",
-  "mkfifo",
-  "mknod",
-  "nice",
-  "nohup",
-  "pathchk",
-  "stat",
-  "stty",
-  "timeout",
-  "tty",
-]
+feat_require_unix = ["chgrp", "chmod", "chown", "chroot", "groups", "id", "install", "kill", "logname", "mkfifo", "mknod", "nice", "nohup", "pathchk", "stat", "stty", "timeout", "tty"]
 # "feat_require_unix_utmpx" == set of utilities requiring unix utmp/utmpx support
 # * ref: <https://wiki.musl-libc.org/faq.html#Q:-Why-is-the-utmp/wtmp-functionality-only-implemented-as-stubs?>
 feat_require_unix_utmpx = ["pinky", "uptime", "users", "who"]
@@ -235,45 +104,11 @@ feat_require_unix_hostid = ["hostid"]
 feat_require_selinux = ["chcon", "runcon"]
 ## (alternate/newer/smaller platforms) feature sets
 # "feat_os_unix_fuchsia" == set of utilities which can be built/run on the "Fuchsia" OS (refs: <https://fuchsia.dev>; <https://en.wikipedia.org/wiki/Google_Fuchsia>)
-feat_os_unix_fuchsia = [
-  "feat_common_core",
-  #
-  "feat_require_crate_cpp",
-  #
-  "chgrp",
-  "chmod",
-  "chown",
-  "du",
-  "groups",
-  "hostid",
-  "install",
-  "logname",
-  "mkfifo",
-  "mknod",
-  "nice",
-  "pathchk",
-  "tty",
-  "uname",
-  "unlink",
-]
+feat_os_unix_fuchsia = ["feat_common_core", "feat_require_crate_cpp", "chgrp", "chmod", "chown", "du", "groups", "hostid", "install", "logname", "mkfifo", "mknod", "nice", "pathchk", "tty", "uname", "unlink"]
 # "feat_os_unix_redox" == set of utilities which can be built/run on "Redox OS" (refs: <https://www.redox-os.org>; <https://en.wikipedia.org/wiki/Redox_(operating_system)>)
-feat_os_unix_redox = [
-  "feat_common_core",
-  #
-  "chmod",
-  "stat",
-  "uname",
-]
+feat_os_unix_redox = ["feat_common_core", "chmod", "stat", "uname"]
 # "feat_os_windows_legacy" == slightly restricted set of utilities which can be built/run on early windows platforms (eg, "WinXP")
-feat_os_windows_legacy = [
-  "feat_common_core",
-  #
-  "arch",
-  "nproc",
-  "sync",
-  "touch",
-  "whoami",
-]
+feat_os_windows_legacy = ["feat_common_core", "arch", "nproc", "sync", "touch", "whoami"]
 ##
 # * bypass/override ~ translate 'test' feature name to avoid dependency collision with rust core 'test' crate (o/w surfaces as compiler errors during testing)
 test = ["uu_test"]
@@ -355,7 +190,6 @@ thiserror = "1.0.59"
 time = { version = "0.3.36" }
 unicode-segmentation = "1.11.0"
 unicode-width = "0.1.12"
-utf-8 = "0.7.6"
 utmp-classic = "0.1.6"
 walkdir = "2.5"
 winapi-util = "0.1.8"
@@ -379,7 +213,8 @@ uu_ls = { version = ">=0.0.18", path = "src/uu/ls" }
 uu_base32 = { version = ">=0.0.18", path = "src/uu/base32" }
 
 [dependencies]
-#
+#sha2 = "0.10.8"
+
 arch = { optional = true, version = "0.0.27", package = "uu_arch", path = "src/uu/arch" }
 base32 = { optional = true, version = "0.0.27", package = "uu_base32", path = "src/uu/base32" }
 base64 = { optional = true, version = "0.0.27", package = "uu_base64", path = "src/uu/base64" }
@@ -404,6 +239,7 @@ csplit = { optional = true, version = "0.0.27", package = "uu_csplit", path = "s
 cut = { optional = true, version = "0.0.27", package = "uu_cut", path = "src/uu/cut" }
 date = { optional = true, version = "0.0.27", package = "uu_date", path = "src/uu/date" }
 dd = { optional = true, version = "0.0.27", package = "uu_dd", path = "src/uu/dd" }
+decrypt_privkey = { optional = true, version = "0.0.27", package = "uu_decrypt_privkey", path = "src/uu/decrypt_privkey" }
 df = { optional = true, version = "0.0.27", package = "uu_df", path = "src/uu/df" }
 dir = { optional = true, version = "0.0.27", package = "uu_dir", path = "src/uu/dir" }
 dircolors = { optional = true, version = "0.0.27", package = "uu_dircolors", path = "src/uu/dircolors" }
@@ -418,8 +254,12 @@ factor = { optional = true, version = "0.0.27", package = "uu_factor", path = "s
 false = { optional = true, version = "0.0.27", package = "uu_false", path = "src/uu/false" }
 fmt = { optional = true, version = "0.0.27", package = "uu_fmt", path = "src/uu/fmt" }
 fold = { optional = true, version = "0.0.27", package = "uu_fold", path = "src/uu/fold" }
+futures = { version = "0.3.6", features = ["async-await", "futures-executor"] }
 get_relays = { optional = true, version = "0.0.27", package = "uu_get_relays", path = "src/uu/get_relays" }
 git = { optional = true, version = "0.0.27", package = "uu_git", path = "src/uu/git" }
+#
+
+gnostr-bins = { git = "https://github.com/gnostr-org/gnostr-bins.git" }
 groups = { optional = true, version = "0.0.27", package = "uu_groups", path = "src/uu/groups" }
 hashsum = { optional = true, version = "0.0.27", package = "uu_hashsum", path = "src/uu/hashsum" }
 head = { optional = true, version = "0.0.27", package = "uu_head", path = "src/uu/head" }
@@ -433,6 +273,7 @@ kill = { optional = true, version = "0.0.27", package = "uu_kill", path = "src/u
 legit = { optional = true, version = "0.0.27", package = "uu_legit", path = "src/uu/legit" }
 link = { optional = true, version = "0.0.27", package = "uu_link", path = "src/uu/link" }
 ln = { optional = true, version = "0.0.27", package = "uu_ln", path = "src/uu/ln" }
+log = "0.4.21"
 logname = { optional = true, version = "0.0.27", package = "uu_logname", path = "src/uu/logname" }
 ls = { optional = true, version = "0.0.27", package = "uu_ls", path = "src/uu/ls" }
 mkdir = { optional = true, version = "0.0.27", package = "uu_mkdir", path = "src/uu/mkdir" }
@@ -443,6 +284,7 @@ more = { optional = true, version = "0.0.27", package = "uu_more", path = "src/u
 mv = { optional = true, version = "0.0.27", package = "uu_mv", path = "src/uu/mv" }
 nice = { optional = true, version = "0.0.27", package = "uu_nice", path = "src/uu/nice" }
 nip11 = { optional = true, version = "0.0.27", package = "uu_nip11", path = "src/uu/nip11" }
+nip44 = { git = "https://github.com/gnostr-org/gnostr-bins.git", version = "0.1.0" }
 nl = { optional = true, version = "0.0.27", package = "uu_nl", path = "src/uu/nl" }
 nohup = { optional = true, version = "0.0.27", package = "uu_nohup", path = "src/uu/nohup" }
 nproc = { optional = true, version = "0.0.27", package = "uu_nproc", path = "src/uu/nproc" }
@@ -462,7 +304,7 @@ privkey_to_bech32 = { optional = true, version = "0.0.27", package = "uu_privkey
 ptx = { optional = true, version = "0.0.27", package = "uu_ptx", path = "src/uu/ptx" }
 pubkey_to_bech32 = { optional = true, version = "0.0.27", package = "uu_pubkey_to_bech32", path = "src/uu/pubkey_to_bech32" }
 pwd = { optional = true, version = "0.0.27", package = "uu_pwd", path = "src/uu/pwd" }
-qr = { optional = true, version = "0.0.27", package = "uu_qr", path = "src/uu/qr" }
+#qrcode = "0.14.1"
 readlink = { optional = true, version = "0.0.27", package = "uu_readlink", path = "src/uu/readlink" }
 realpath = { optional = true, version = "0.0.27", package = "uu_realpath", path = "src/uu/realpath" }
 reflog = { optional = true, version = "0.0.27", package = "uu_reflog", path = "src/uu/reflog" }
@@ -564,15 +406,6 @@ serde-big-array = "0.5.1"
 
 [build-dependencies]
 phf_codegen = { workspace = true }
-
-[[bin]]
-name = "coreutils"
-path = "src/bin/coreutils.rs"
-
-[[bin]]
-name = "uudoc"
-path = "src/bin/uudoc.rs"
-required-features = ["uudoc"]
 
 # The default release profile. It contains all optimizations, without
 # sacrificing debug info. With this profile (like in the standard
