@@ -3,7 +3,7 @@
 
 [package]
 name = "gnostr"
-version = "0.0.51"
+version = "0.0.52"
 authors = ["uutils developers"]
 license = "MIT"
 description = "coreutils ~ GNU coreutils (updated); implemented as universal (cross-platform) utils, written in Rust"
